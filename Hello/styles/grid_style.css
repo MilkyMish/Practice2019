@@ -1,0 +1,32 @@
+html, body {
+    padding: 0;
+}
+body {
+    background: #EAEDF2;
+    margin-left:80px;
+    margin-top:82px;
+
+} 
+.location-header
+{
+    
+    display:grid;
+    grid-template-columns:  435px,88px, 825px;
+    grid-template-rows:  295px, 38px;
+    /* grid-column-gap: 88px; */
+    grid-template-areas: 
+    "block-person . block-contacts"
+}
+.block-person
+{
+    /* grid-column: 1/2; */
+    width:825px;
+
+    background-color: #FFFFFF;
+}
+.block-contacts
+{
+    /* grid-column: 3/4; */
+
+    background-color: #FFFFFF; 
+}

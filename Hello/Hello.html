@@ -3,16 +3,26 @@
   <head>
     <meta charset="utf-8">
     <title>Task 9</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/styles/style.css">
   </head>
   <body>
 <div class="location-header">
     <div class="block-person">
+      <div class="image"></div>
      <div class="Marie">
          <h1>Marie Dehayes</h1>
          <p>Bordeaux (33)</p>
         </div>
-     <div class="info"> so</div>
+     <div class="info"> 
+       <!-- Добавил дополнительные классы, чтобы было очевдинее, какой div за что отвечает -->
+       <!-- Но в файле со стилями ими не воспользовался -->
+       <!-- Как лучше сделать, стереть классы здесь, чтобы не мешались, или задать стиль для кнопок 
+        через эти классы, а не через nth-child? Но тогда css файл будет длиннее  -->
+      <a class="info-square bday" href="#"></a>
+      <a class="info-square country" href="#"></a>
+      <a class="info-square drive-license" href="#"></a>
+      <a class="info-square smoking" href="#"></a>
+     </div>
     </div>
     
     
@@ -20,15 +30,26 @@
         <div class="text">
            <h1>Directrice artistique web</h1>
             <p> 
-               Je suis a la rescherche d'un poste pour mettre ma creativite a votre service. Polyvalente, determinee et aux competenses multiples, je cree pour vous le design de vos projects web avec amour.
+               Je suis a la recherche d'un poste pour mettre ma <b>creativite</b> a votre service. 
+               Polyvalente, determinee et aux <span class="blue">competenses multiples</span>, je cree pour vous le design de 
+               vos projects web avec amour.
             </p>
         </div>
-        <div class="mail">
-                 
-                    bonjuur@mariedehayes.com
-                    <span> www.mariedehayes.com</span>
-               
-             </div>
+
+        <div class="mail">    
+            bonjuur@mariedehayes.com
+           <span> www.mariedehayes.com</span>   
+        </div>
+
+        <div class="links">
+            <a class="social twitter" href="#"></a>
+            <a class="social" href="#"></a>
+            <a class="social" href="#"></a>
+            <a class="social" href="#"></a>
+            <a class="social" href="#"></a>
+            <a class="social" href="#"></a>
+        </div>      
+
     </div>
 
 </div>

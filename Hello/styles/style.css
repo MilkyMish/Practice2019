@@ -1,0 +1,183 @@
+html, body {
+
+    padding: 0;
+}
+
+body {
+
+    background: #EAEDF2;
+} 
+.location-header
+{
+
+    left:72px;
+    top:74px;
+    width:1348px;
+    position: relative;
+
+}
+.block-person
+{
+    width:435px;
+    height: 216px;
+    background-color: #FFFFFF;
+     float: left; 
+
+}
+.Marie h1
+{
+    font-family: "Signika-Regular",  sans-serif;
+    font-size:25px;
+    position: relative;
+    left:218px;
+    top:64px;
+}
+.Marie p
+{
+    font-family: "Lato",  sans-serif;
+    font-size:17px;
+    position: relative;
+    left:218px;
+    top:54px;
+}
+.info
+{
+    width:435px;
+    height: 79px;
+    background-color: rgb(255, 255, 255);
+    position: relative;
+    margin-top:133px;
+
+}
+
+.info-square
+{
+    display: inline-block;
+    width: 109px;
+    height:79px;
+    /* border: rgb(0, 0, 0) solid 1px; */
+    margin-left:0px;
+}
+.info-square:nth-child(1)
+{
+    /* из-за того что картинка с макетом размыта делаю сдвиг на один пиксель, чтобы лучше совпадало
+    хотя, по сути, точнее было бы, без этого отступа  */
+    margin-left:1px;
+    width:108px;
+    
+
+    background-image: url("/img/bday.png");
+}
+.info-square:nth-child(2)
+{
+    margin-left:-4px;
+    background-image: url("/img/country.png");
+}
+.info-square:nth-child(3)
+{
+    margin-left:-4px;
+    background-image: url("/img/drive_license.png");
+}
+.info-square:nth-child(4)
+{
+    margin-left:-5px;
+    background-image: url("/img/smoking.png");
+}
+
+.block-person .image
+{
+    background-image: url("/img/marie.png"); 
+    width:146px;
+    height:148px;
+    margin-left:27px;
+    margin-top:35px;
+    position:absolute;
+    
+}
+.blue
+{
+    color:#92D4E0;
+}
+
+
+.block-contacts
+{
+
+    width:825px;
+    height: 296px;
+    background-color:#FFFFFF;
+    
+    float:right;
+
+}
+.text{
+    float:left;
+}
+
+.text h1
+{
+    font-family: "Signika-Regular",  sans-serif;
+    font-size:35px;
+    position: relative;
+    margin-left:33px;
+    margin-top:46px;
+    
+}
+
+.text p
+{
+    font-family: "Lato",  sans-serif;
+    font-size:17px;
+    position: relative;
+    margin-left:33px;
+    width:402px;
+    position: relative;
+     top:-11px; 
+    line-height: 1.85em; 
+    text-align: justify;
+    
+}
+.mail
+{
+    height: 109px;
+    top:0;
+    width:276px;
+    line-height: 1.85em; 
+    border-bottom: solid 1px rgb(0, 0, 0);
+    font-family: "Lato",  sans-serif;
+    font-size:22px;
+    position: relative;
+    margin-top:101px;  
+    margin-right:35px;
+    float:right;
+    text-align: justify;
+}
+.mail span{
+ color:#B85D5A;
+ 
+ 
+}
+
+.links
+{
+    height: 21px;
+    width: 414px;
+    margin-left:23px;
+    margin-top:247px;
+    /* background-image: #FFFFFF url("/img/sprite.png") no-repeat;  */
+    background-image: url("/img/sprite.png");
+}
+/* .social
+{
+    height: 21px;
+    width:34px; 
+    margin-right: 34px;
+    display: inline-block;
+     border: rgb(0, 0, 0) solid 1px; 
+padding-top:0;
+   
+}
+.social .twitter
+{
+    background-position: 0 0;
+} */
