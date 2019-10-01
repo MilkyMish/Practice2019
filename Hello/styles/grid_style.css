@@ -1,32 +1,134 @@
-html, body {
-    padding: 0;
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
-body {
-    background: #EAEDF2;
-    margin-left:80px;
-    margin-top:82px;
 
-} 
-.location-header
-{
-    
-    display:grid;
-    grid-template-columns:  435px,88px, 825px;
-    grid-template-rows:  295px, 38px;
-    /* grid-column-gap: 88px; */
-    grid-template-areas: 
-    "block-person . block-contacts"
+.app {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows:
+    2fr
+    10fr
+    1fr;
+  grid-template-areas:
+    "locheader locheader"
+    "content content"
+    "footer footer";
 }
-.block-person
-{
-    /* grid-column: 1/2; */
-    width:825px;
 
-    background-color: #FFFFFF;
+.location-header {
+  display: grid;
+  grid-area: locheader;
+  background: lightblue;
+  grid-template-columns: 1fr 2fr;
+  grid-template-rows: 1fr;
+  grid-template-areas: "block-person block-contacts";
 }
-.block-contacts
-{
-    /* grid-column: 3/4; */
 
-    background-color: #FFFFFF; 
+.block-person {
+  display: grid;
+  grid-area: block-person;
+  /* width: 470px; */
+  background: lightcoral;
+  grid-template-columns: repeat(autofit, 44px);
+  grid-template-rows: 3fr 1fr;
+  grid-template-areas:
+    "photo . . marie"
+    "info info info info";
+}
+
+.profile {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.profile-photo {
+  grid-area: photo;
+  width: 140px;
+  height: 140px;
+}
+
+.marie {
+  grid-area: marie;
+  /* margin: 50% 0; */
+}
+
+.info {
+  grid-area: info;
+}
+
+.block-contacts {
+  display: grid;
+  margin-left: 10%;
+  grid-area: block-contacts;
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows:
+    1fr
+    3fr
+    1fr;
+  grid-template-areas:
+    "head head"
+    "test mail"
+    "social .";
+  width: 800px;
+  background: lightgreen;
+}
+
+.text-head {
+  grid-area: head;
+  display: inline-block;
+  padding: 20px 0 0 0;
+}
+.text-test {
+  grid-area: test;
+  display: flex;
+  align-items: center;
+}
+.mail {
+  grid-area: mail;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  border-bottom: 2px solid gray;
+}
+
+.links {
+  grid-area: social;
+}
+.fa-twitter {
+  color: brown;
+  font-size: 30px;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 5fr 1fr 5fr;
+  grid-template-rows: 1fr;
+}
+
+.content-card {
+  display: grid;
+  background: lightgrey;
+  grid-template-columns: 1fr;
+  grid-template-rows:
+    1fr
+    3fr
+    1fr;
+  grid-template-areas:
+    "contentCardHead"
+    "contentCardText"
+    "contentCardFooter";
+}
+
+.content-card-head {
+  grid-area: contentCardHead;
+}
+
+.content-card-text {
+  grid-area: contentCardText;
+}
+.content-card-footer {
+  grid-area: contentCardFooter;
 }
