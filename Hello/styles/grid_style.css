@@ -244,9 +244,8 @@ h2
 
 /* попробовать вынести в отдельный класс */
 .content-card-name h2{
-  width:480px;
+  width:600px;
   font-weight: normal;
-
 }
 .description{
   /* width:390px; */
@@ -329,4 +328,200 @@ button
   margin-left: 30px;
   text-align: center;
   font-size:16px;
+}
+
+.second
+{
+  margin-top:33px;
+  grid-template-rows:
+  100px
+  160px
+  62px;
+}
+
+.second-text
+{
+margin-top:0px;
+}
+
+.third
+{
+  margin-top:33px;
+  grid-template-rows:
+  109px
+  62px;
+  grid-template-areas:
+  "contentCardHead"
+  "contentCardFooter";
+}
+.deactive
+{
+  background-color: #AFBBC9;
+}
+
+.right
+{
+  /* margin-top:33px; */
+  grid-template-rows:
+  109px
+  62px;
+  grid-template-areas:
+  "contentCardHead"
+  "contentCardFooter";
+  background-color: #DCE2EB;
+}
+.right-description
+{
+  color:#9199A4;
+  font-size:15px;
+}
+
+.btn-right
+{
+  background-color: #0FCDC1;
+  font-size:14px;
+}
+
+h3.right-profession
+{
+  color:#17C4EC;
+  font-size:16px;
+  font-weight: bold;
+}
+
+.right-footer
+{
+  color:#3E4854 !important;
+  font-size: 14px;
+  /* padding-bottom:15px !important; */
+  margin-top: -8px;
+}
+
+.right-footer-grid
+{
+  grid-template-columns: 140px 170px 190px 123px;
+  grid-template-rows: 1fr;
+  grid-template-areas:
+  "geo date . stars";
+}
+
+.right-second
+{
+  margin-top:33px;
+}
+.dot-line
+{
+  width:625px;
+  height: 36px;
+  border-bottom: 2px dotted #C2C5CA ;
+}
+.right-star
+{
+  /* margin-top:33px; */
+  grid-template-rows:
+  97px
+  31px;
+  grid-template-areas:
+  "contentCardHead"
+  "contentCardFooter";
+  background-color: #DCE2EB;
+}
+.right-star h2
+{
+  font-size:20px;
+}
+.right-education
+{
+  color:#0FCDC1;
+  font-size:17px !important;
+}
+.educationName
+{
+ font-size:20px;
+}
+
+
+.progress
+{
+  margin-top:33px;
+  grid-template-columns: 626px;
+  grid-template-rows:
+  117px
+  285px;
+  grid-template-areas:
+  "progressHead"
+  "progressContent";
+  background: white;
+}
+.progress-head
+{
+  grid-area:progressHead;
+}
+
+.webaddict
+{
+  padding-left:5px;
+}
+/* circle
+{
+  display: flex;
+  justify-content: space-around;
+
+} */
+.serivore
+{
+  margin-left: -4px;
+}
+.melomane
+{
+  margin-left: -6px;
+}
+.fashionista
+{
+  margin-left: -6px;
+}
+.epicurienne
+{
+  margin-left: -3px;
+}
+.voyageuse
+{
+  margin-left: -5px;
+}
+.progress-content
+{
+  grid-area:progressContent;
+  grid-template-columns:313px 313px;
+  grid-template-areas:
+  "columnLeft columnRight";
+}
+.progress-left
+{
+  grid-area:columnLeft;
+
+}
+
+.progress-right
+{
+  grid-area:columnRight;
+
+}
+.stars 
+{
+  width:150px;
+  grid-area:stars;  
+}
+.footer-geo
+{
+  grid-area: geo;
+}
+
+.footer-date
+{
+  grid-area: date;
+}
+
+.stars img{
+  display: inline-block;
+padding-right: 0px !important;
 }
