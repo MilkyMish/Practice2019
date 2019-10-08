@@ -206,6 +206,15 @@ h2
   margin-left: 40px;
 }
 
+.pear
+{
+  margin-left:13px;
+}
+.in
+{
+  margin-left:5px;
+}
+
 
 .fa-twitter {
   color: brown;
@@ -228,11 +237,12 @@ h2
   grid-template-rows:
     86px
     193px
-    59px;
+    60px;
   grid-template-areas:
     "contentCardHead"
     "contentCardText"
     "contentCardFooter";
+    border-radius: 3px;
 }
 
 .content-card-head {
@@ -346,7 +356,7 @@ button
   grid-template-rows:
   100px
   164px
-  57px;
+  58px;
 }
 
 .second-text
@@ -359,7 +369,7 @@ margin-top:0px;
   margin-top:33px;
   grid-template-rows:
   113px
-  58px;
+  59px;
   grid-template-areas:
   "contentCardHead"
   "contentCardFooter";
@@ -401,7 +411,7 @@ margin-top:0px;
 {
   background-color: #0FCDC1;
   font-size:14px;
-  margin-right: 10px;
+  margin-right: 14px;
 }
 
 h3.right-profession
@@ -689,6 +699,7 @@ margin-top:16px;
   text-align: center;
   margin-left:119px;
   font-size:11px;
+  border-radius: 5px;
 }
 
 .illustrator-skill
@@ -703,6 +714,7 @@ margin-top:16px;
   text-align: center;
   margin-left:52px;
   font-size:11px;
+  border-radius: 5px;
 }
 .illustrator-skill::after{
   content: ''; 
@@ -728,6 +740,7 @@ border-color: #033585 transparent transparent transparent;
   text-align: center;
   margin-left:150px;
   font-size:11px;
+  border-radius: 5px;
 }
 
 .wordpress-skill::after{
@@ -753,6 +766,7 @@ border-color: #033585 transparent transparent transparent;
   text-align: center;
   margin-left:126px;
   font-size:11px;
+  border-radius: 5px;
 }
 
 .prestashop-skill::after{
