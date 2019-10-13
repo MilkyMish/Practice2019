@@ -27,10 +27,25 @@ canvas {
     color: #757575;
 }
 
-#score {
+.gamescore
+{
     float: right;
+    display: flex;
+    flex-direction: column;
     color: white;
     font-size: 2em;
+}
+/* 
+#score {
+    /* float: right;
+    display: flex;
+    flex-direction: column;
+    color: white;
+    font-size: 2em; 
+} */
+
+#manna {
+    color:orangered;
 }
 
 .key {
