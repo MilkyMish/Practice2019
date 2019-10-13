@@ -110,31 +110,33 @@ function update(dt) {
 
 function spawnMegalith()
 {
-    if(Math.random()<0.5)
-    {
-        for(var i=0; i<4; i++)
+        for(var i=0; i<megalithCountGenerator(); i++)
         {
          megaliths.push({
-            pos: [canvas.width * Math.random(),
+            pos: [(canvas.width * Math.random())+100,
                 Math.random() * canvas.height],
             sprite: new Sprite('img/sprites_02.png', [0, 208], [55, 60],
                 1, [0, 1],'vertical')
 
          })
         }
-    }
-    else
-    {
-        for(var i=0; i<8; i++)
-        {
-         megaliths.push({
-            pos: [canvas.width * Math.random(),
-                Math.random() * canvas.height],
-            sprite: new Sprite('img/sprites_02.png', [0, 208], [55, 60],
-                1, [0, 1],'vertical')
+}
 
-         })
-        }
+function megalithCountGenerator()
+{
+    var count = Math.random();
+    var check = + count.toFixed(1);
+    switch (check) {
+        case 0.4:
+          return 4;
+        case 0.6:
+          return 5;
+        case 0.8:
+          return 6;
+        case 0.9:
+          return 7;
+        default:
+          return 8;
     }
 }
 
