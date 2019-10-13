@@ -46,7 +46,8 @@ function init() {
 
 resources.load([
     'img/sprites.png',
-    'img/terrain.png'
+    'img/terrain.png',
+    'img/sprites_02.png'
 ]);
 resources.onReady(init);
 
@@ -55,10 +56,12 @@ var player = {
     pos: [0, 0],
     sprite: new Sprite('img/sprites.png', [0, 0], [39, 39], 16, [0, 1])
 };
+//  spawnMegalith();
 
 var bullets = [];
 var enemies = [];
 var explosions = [];
+var megaliths = [];
 
 var lastFire = Date.now();
 var gameTime = 0;
@@ -88,13 +91,52 @@ function update(dt) {
                   Math.random() * (canvas.height - 39)],
             sprite: new Sprite('img/sprites.png', [0, 78], [80, 39],
                                6, [0, 1, 2, 3, 2, 1])
+           
         });
     }
+    // if()
+    // {
+    //     spawnMegalith();
+    // }
+    if(megaliths.length==0)
+    {
+        spawnMegalith();
+    };
 
     checkCollisions();
 
     scoreEl.innerHTML = score;
 };
+
+function spawnMegalith()
+{
+    if(Math.random()<0.5)
+    {
+        for(var i=0; i<4; i++)
+        {
+         megaliths.push({
+            pos: [canvas.width * Math.random(),
+                Math.random() * canvas.height],
+            sprite: new Sprite('img/sprites_02.png', [0, 208], [55, 60],
+                1, [0, 1],'vertical')
+
+         })
+        }
+    }
+    else
+    {
+        for(var i=0; i<8; i++)
+        {
+         megaliths.push({
+            pos: [canvas.width * Math.random(),
+                Math.random() * canvas.height],
+            sprite: new Sprite('img/sprites_02.png', [0, 208], [55, 60],
+                1, [0, 1],'vertical')
+
+         })
+        }
+    }
+}
 
 function handleInput(dt) {
     if(input.isDown('DOWN') || input.isDown('s')) {
@@ -230,12 +272,78 @@ function checkCollisions() {
                 bullets.splice(j, 1);
                 break;
             }
+          
         }
-
         if(boxCollides(pos, size, player.pos, player.sprite.size)) {
             gameOver();
         }
     }
+
+    checkMegaliths();
+
+}
+function checkMegaliths()
+{
+    for(var i=0; i<megaliths.length; i++) {
+        var posM = megaliths[i].pos;
+        var sizeM = megaliths[i].sprite.size;
+
+        for(var j=0; j<bullets.length; j++) {
+            var pos2 = bullets[j].pos;
+            var size2 = bullets[j].sprite.size;
+
+          if(boxCollides(posM, sizeM, pos2, size2)) {
+
+            explosions.push({
+                pos: pos2,
+                sprite: new Sprite('img/sprites.png',
+                                   [0, 117],
+                                   [39, 39],
+                                   16,
+                                   [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+                                   null,
+                                   true)
+            });
+            bullets.splice(j, 1);
+
+            break;
+            }
+        }
+        if(boxCollides(posM, sizeM, player.pos, player.sprite.size)) {
+            gameOver();
+        }
+    }
+
+    for(var i=0; i<megaliths.length; i++) {
+        var posM = megaliths[i].pos;
+        var sizeM = megaliths[i].sprite.size;
+
+        for(var j=0; j<enemies.length; j++) {
+            var pos2 = enemies[j].pos;
+            var size2 = enemies[j].sprite.size;
+
+          if(boxCollides(posM, sizeM, pos2, size2)) {
+
+            explosions.push({
+                pos: pos2,
+                sprite: new Sprite('img/sprites.png',
+                                   [0, 117],
+                                   [39, 39],
+                                   16,
+                                   [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+                                   null,
+                                   true)
+            });
+            enemies.splice(j, 1);
+
+            break;
+            }
+        }
+        if(boxCollides(posM, sizeM, player.pos, player.sprite.size)) {
+            gameOver();
+        }
+    }
+
 }
 
 function checkPlayerBounds() {
@@ -268,6 +376,7 @@ function render() {
     renderEntities(bullets);
     renderEntities(enemies);
     renderEntities(explosions);
+    renderEntities(megaliths);
 };
 
 function renderEntities(list) {
