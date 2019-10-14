@@ -128,11 +128,16 @@ function spawnMegalith()
 {
         for(var i=0; i<megalithCountGenerator(); i++)
         {
+            var megalithSprite=1;
+            if(Math.random()<0.5)
+            {
+                megalithSprite = 0;
+            }           
          megaliths.push({
             pos: [(canvas.width * Math.random())+100,
                 Math.random() * canvas.height],
             sprite: new Sprite('img/sprites_02.png', [0, 208], [55, 60],
-                0.4, [0, 1],'vertical')
+                0.4, [megalithSprite],'vertical')
 
          })
         }
@@ -244,24 +249,21 @@ function updateEntities(dt) {
 
     for(var i=0; i<megaliths.length; i++) {
         megaliths[i].sprite.update(dt);
-
-        // // Remove if animation is done
-        // if(megaliths[i].sprite.done) {
-        //     megaliths.splice(i, 1);
-        //     i--;
-        // }
     }
     
     for(var i=0; i<manna.length; i++) {
         manna[i].sprite.update(dt);
 
-        // if(boxCollides(manna[i].pos, manna[i].size, player.pos, player.sprite.size)) {
-        //     manna.splice(i, 1);
-        //     i--;
-        // }
-        if(manna[i].sprite.done) {
-            manna.splice(i, 1);
-            i--;
+      
+
+     
+        if(manna[i].sprite.once=='once') {
+            if(manna[i].sprite.done) {
+                manna.splice(i, 1);
+                i--;
+                mannascore += 100;
+            }
+
         }
     }
 
@@ -339,13 +341,17 @@ function checkManna()
             manna[i]={
                 pos: posManna,
                 sprite: new Sprite('img/sprites_02.png', [5, 167], [59, 40],
-                                   5, [2, 3],'horizontal','once')
+                                   1, [2, 3],'horizontal','once')
                
-            };
-            manna.splice(i, 1);
-            i--;
-            mannascore += 100;
+            };      
         }
+        for(var j=0; j<megaliths.length; j++) 
+        {
+        if(boxCollides(posManna, sizeManna, megaliths[j].pos, megaliths[j].sprite.size)) {
+            manna.splice(i, 1);
+                i--;
+        }
+      }
     }
 
 
@@ -380,7 +386,7 @@ function checkMegaliths()
             }
         }
         if(boxCollides(posM, sizeM, player.pos, player.sprite.size)) {
-            gameOver();
+           checkMegalithBounds();
         }
     }
 
@@ -410,7 +416,7 @@ function checkMegaliths()
             }
         }
         if(boxCollides(posM, sizeM, player.pos, player.sprite.size)) {
-            gameOver();
+            checkMegalithBounds();
         }
     }
 
@@ -431,6 +437,25 @@ function checkPlayerBounds() {
     else if(player.pos[1] > canvas.height - player.sprite.size[1]) {
         player.pos[1] = canvas.height - player.sprite.size[1];
     }
+}
+
+function checkMegalithBounds()
+{
+
+    
+ if(input.isDown('DOWN') || input.isDown('s')) {
+            player.pos[1] = player.pos[1] - 3;
+        }
+        if(input.isDown('UP') || input.isDown('w')) {
+            player.pos[1] = player.pos[1] + 3;
+        }
+        if(input.isDown('LEFT') || input.isDown('a')) {
+            player.pos[0] = player.pos[0] + 3;
+        }
+        if(input.isDown('RIGHT') || input.isDown('s')) {
+            player.pos[0] = player.pos[0] - 3;
+        }
+   
 }
 
 // Draw everything
