@@ -10,6 +10,14 @@ namespace DataLayer
     public interface IData
     {
         Configuration StartGame(Configuration configuration);
-        
+
+
+        void CreateKolobok(Kolobok _kolobok);
+        Kolobok GetKolobok();
+        void UpdateKolobok(Kolobok _kolobok);
+
+        void AddTank(Tank tank);
+        void UpdateTanks(List<Tank> tanks);
+        IEnumerable<Tank> GetTanks();
     }
 }

@@ -9,6 +9,7 @@ namespace DataLayer
 {
     public class Data:IData
     {
+        #region Config
         public int MapWidth = 530;
         public int MapHeight = 480;
 
@@ -21,5 +22,48 @@ namespace DataLayer
         {
            return configuration;
         }
+        #endregion Config
+
+        #region Resources
+        private List<Tank> Tanks = new List<Tank>();
+        private List<Apple> Apples;
+
+        private Kolobok kolobok = new Kolobok();
+
+        public Kolobok GetKolobok()
+        {
+            return kolobok;
+        }
+        public void UpdateKolobok(Kolobok _kolobok)
+        {
+            kolobok = _kolobok;
+        }
+
+        public void CreateKolobok(Kolobok _kolobok)
+        {
+            kolobok = _kolobok;
+        }
+
+        public void AddTank(Tank tank)
+        {
+            Tanks.Add(tank);
+        }
+
+        public IEnumerable<Tank> GetTanks()
+        {
+            return Tanks;
+        }
+
+        public void UpdateTanks(List<Tank> tanks)
+        {
+            //Tanks.Clear();
+            //Tanks = tanks;
+            
+        }
+        public void  RemoveTank(int id)
+        {
+
+        }
+        #endregion Resources
     }
 }

@@ -6,9 +6,13 @@ using System.Threading.Tasks;
 
 namespace Entities
 {
-   public class Entity
+    public delegate void gameController();
+
+    public class PackmanController
     {
-        public int posX, posY;
-        public  int[] SpriteSize = new int[2] { 75, 83 };
+        
+
+        
+
     }
 }

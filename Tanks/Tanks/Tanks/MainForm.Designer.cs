@@ -62,6 +62,7 @@
             this.Name = "MainForm";
             this.Text = "Tanks";
             this.Load += new System.EventHandler(this.MainForm_Load);
+            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.MainForm_KeyPress);
             ((System.ComponentModel.ISupportInitialize)(this.Map)).EndInit();
             this.ResumeLayout(false);
 

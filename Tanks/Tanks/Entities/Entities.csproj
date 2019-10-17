@@ -33,6 +33,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -45,6 +46,7 @@
     <Compile Include="Configuration.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="Kolobok.cs" />
+    <Compile Include="PackmanController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tank.cs" />
     <Compile Include="Wall.cs" />
