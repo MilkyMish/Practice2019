@@ -95,9 +95,11 @@ namespace Tanks
                 bullets[i].Move();
             }
             data.UpdateBullets(bullets);
-            Map.Refresh();
+            
             CheckEntityBounds(kolobok);
-
+            bullets = CheckEntityBounds(bullets);
+            data.UpdateBullets(bullets);
+            Map.Refresh();
         }
 
         //void handleInput(DateTime dt)
@@ -192,6 +194,7 @@ namespace Tanks
                 r <= x2 || x > r2 || b <= y2 || y > b2;
             //((x2 <= r) || (y2 <= b)) || ((r2 >= x) || (b2>=y));
         }
+        //метод не учитывает повороты
         bool boxCollides(int x, int y, int[] spritesize, int x2, int y2, int[] spritesize2)
         {
             return !collides(x, y, x + spritesize[0]-5, y + spritesize[1],
@@ -249,10 +252,53 @@ namespace Tanks
             {
                 entity.posY = MapHeight - entity.SpriteSize[1];
             }
-
         }
 
-        
+        private List<Bullet> CheckEntityBounds(List<Bullet> bullets)
+        {
+            List<Wall> walls = data.GetWalls();
+            List<Bullet> bulletsTemp = new List<Bullet>(bullets);
+           
+            foreach (Bullet bullet in bullets)
+            {
+                if (bullet.posX < 0)
+                {
+                    bulletsTemp.Remove(bullet);
+                    break;
+                }
+                else if (bullet.posX > MapWidth - bullet.SpriteSize[0])
+                {
+                    bulletsTemp.Remove(bullet);
+                    break;
+                }
+                foreach (var wall in walls)
+                {
+                    if (boxCollides(wall.posX, wall.posY, wall.SpriteSize, bullet.posX, bullet.posY, bullet.SpriteSize))
+                    {
+
+                        bulletsTemp.Remove(bullet);
+                        break;
+                    }
+
+
+                }
+
+
+                if (bullet.posY < 0)
+                {
+                    bulletsTemp.Remove(bullet);
+                    break;
+                }
+                else if (bullet.posY > MapHeight - bullet.SpriteSize[1])
+                {
+                    bulletsTemp.Remove(bullet);
+                    break;
+                }
+
+            }
+            return bulletsTemp;
+        }
+
 
 
     }

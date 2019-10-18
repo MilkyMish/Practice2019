@@ -24,7 +24,7 @@ namespace Entities
                     this.posY = entity.posY - SpriteSize[1];
                     break;
                 case RotateFlipType.Rotate90FlipNone:
-                    this.posX = entity.posX;
+                    this.posX = entity.posX + entity.SpriteSize[0];
                     this.posY = entity.posY + SpriteSize[1]/2;
                     break;
                 case RotateFlipType.Rotate180FlipNone:
@@ -32,7 +32,7 @@ namespace Entities
                     this.posY = entity.posY + SpriteSize[1];
                     break;
                 case RotateFlipType.Rotate270FlipNone:
-                    this.posX = entity.posX;
+                    this.posX = entity.posX - entity.SpriteSize[0];
                     this.posY = entity.posY + SpriteSize[1] / 2;
                     break;                
                 default:
