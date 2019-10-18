@@ -85,19 +85,19 @@ namespace DataBusinessLayer
             {
                 case 0:
                     tank.posY -= tank.Speed;
-                    tank.TankDirection = RotateFlipType.RotateNoneFlipNone;
+                    tank.Direction = RotateFlipType.RotateNoneFlipNone;
                     return tank;
                 case 1:
                     tank.posY += tank.Speed;
-                    tank.TankDirection = RotateFlipType.Rotate180FlipNone;
+                    tank.Direction = RotateFlipType.Rotate180FlipNone;
                     return tank;
                 case 2:
                     tank.posX -= tank.Speed;
-                    tank.TankDirection = RotateFlipType.Rotate270FlipNone;
+                    tank.Direction = RotateFlipType.Rotate270FlipNone;
                     return tank;
                 case 3:
                     tank.posX += tank.Speed;
-                    tank.TankDirection = RotateFlipType.Rotate90FlipNone;
+                    tank.Direction = RotateFlipType.Rotate90FlipNone;
                     return tank;
                 default:
                     return tank;
@@ -109,5 +109,35 @@ namespace DataBusinessLayer
         {
             Game.UpdateTanks(tanks);
         }
+
+        public List<Wall> GetWalls()
+        {
+            return Game.GetWalls();
+        }
+        public List<Wall> GenerateWalls()
+        {
+            return Game.GenerateWalls();
+        }
+
+        public void AddBullet(Bullet bullet)
+        {
+            Game.AddBullet(bullet);
+        }
+        public void RemoveBullet(Bullet bullet)
+        {
+            Game.RemoveBullet(bullet);
+        }
+        public List<Bullet> GetBullets()
+        {
+            return Game.GetBullets();
+        }
+        public void UpdateBullets(List<Bullet> bullets)
+        {
+            Game.UpdateBullets(bullets);
+        }
+        //public void BulletMove(Bullet bullet)
+        //{
+            
+        //}
     }
 }

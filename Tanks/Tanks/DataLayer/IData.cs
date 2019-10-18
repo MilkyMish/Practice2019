@@ -19,5 +19,13 @@ namespace DataLayer
         void AddTank(Tank tank);
         void UpdateTanks(List<Tank> tanks);
         IEnumerable<Tank> GetTanks();
+
+        List<Wall> GenerateWalls();
+        List<Wall> GetWalls();
+
+        List<Bullet> GetBullets();
+        void AddBullet(Bullet bullet);
+        void RemoveBullet(Bullet bullet);
+        void UpdateBullets(List<Bullet> bullets);
     }
 }

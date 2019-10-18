@@ -10,7 +10,7 @@ namespace Entities
     public class Tank:Entity
     {
         public int Speed = 10;
-        public RotateFlipType TankDirection = RotateFlipType.RotateNoneFlipNone;
+        
         public string Sprite = @"..\..\..\img\Blue_tank.png";
 
         public Tank (int[] position)

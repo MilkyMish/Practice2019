@@ -15,22 +15,17 @@ namespace Tanks
 {
     public partial class MainForm : Form
     {
-        //public static Tank tank = new Tank();
-       
-        
+
         private readonly DataBL data = new DataBL();
-        //Graphics g;
-        //Bitmap bitmap;
+      
         private int MapWidth;
         private int MapHeight;
 
         DateTime lastTime;
         int gameTime;
 
-       // Kolobok kolobok = new Kolobok();
-        //List<Tank> tanks = new List<Tank>(); не работает
-        //Tank[] tanks = new Tank[5];
-        RotateFlipType kolobokDirection;
+        //List<Bullet> bullets = new List<Bullet>();
+     
         
 
 
@@ -47,7 +42,7 @@ namespace Tanks
 
             Update(dt);
             //render();
-
+            
             lastTime = now;                       
         }
 
@@ -62,10 +57,11 @@ namespace Tanks
             Map.BackColor = Color.Black;
 
             data.AddTanks(startConf.TanksCount);
-
-
+            data.GenerateWalls();
+            
 
             Map.Paint += new PaintEventHandler(this.Map_Paint);
+            Map.KeyDown += Map_KeyDown;
             this.Controls.Add(Map);
             //tanks = (List<Tank>)data.GetTanks();
             //tanks = (Tank[])data.GetTanks();
@@ -93,6 +89,12 @@ namespace Tanks
             }
             data.UpdateTanks(tanks);
             Kolobok kolobok = data.GetKolobok();
+            List<Bullet> bullets = data.GetBullets();
+            for (int i = 0; i < bullets.Count; i++)
+            {
+                bullets[i].Move();
+            }
+            data.UpdateBullets(bullets);
             Map.Refresh();
             CheckEntityBounds(kolobok);
 
@@ -115,36 +117,55 @@ namespace Tanks
             if (e.KeyChar=='w')
             {
                 kolobok.posY -= kolobok.Speed;
-                kolobokDirection = RotateFlipType.RotateNoneFlipNone;
+                kolobok.Direction = RotateFlipType.RotateNoneFlipNone;
             }
             if (e.KeyChar == 's')
             {
                 kolobok.posY += kolobok.Speed;
-                kolobokDirection = RotateFlipType.Rotate180FlipNone;
+                kolobok.Direction = RotateFlipType.Rotate180FlipNone;
             }
             if (e.KeyChar == 'a')
             {
                 kolobok.posX -= kolobok.Speed;
-                kolobokDirection = RotateFlipType.Rotate270FlipNone;
+                kolobok.Direction = RotateFlipType.Rotate270FlipNone;
             }
             if (e.KeyChar == 'd')
             {
                 kolobok.posX += kolobok.Speed;
-                kolobokDirection = RotateFlipType.Rotate90FlipNone;
+                kolobok.Direction = RotateFlipType.Rotate90FlipNone;
+            }
+            if (e.KeyChar == ' ')
+            {
+                data.AddBullet(new Bullet(kolobok));
+                
             }
             data.UpdateKolobok(kolobok);
 
         }
 
+
+        private void Map_KeyDown(object sender, KeyEventArgs e)
+        {
+            
+        }
+
         private void Map_Paint(object sender, System.Windows.Forms.PaintEventArgs e)
         {
+            Graphics g = e.Graphics;
+
+            List<Wall> walls = data.GetWalls();
+            Bitmap sprite = new Bitmap(walls[0].Sprite);
+
+            foreach (Wall wall in walls)
+            {
+                g.DrawImage(sprite, wall.posX, wall.posY);
+            }
 
             Kolobok kolobok = data.GetKolobok();
-            Graphics g = e.Graphics;
-            Bitmap sprite = new Bitmap(kolobok.Sprite);
+            sprite = new Bitmap(kolobok.Sprite);
 
 
-            sprite.RotateFlip(kolobokDirection);
+            sprite.RotateFlip(kolobok.Direction);
             g.DrawImage(sprite, kolobok.posX, kolobok.posY);
 
             List<Tank> tanks = (List<Tank>)data.GetTanks();
@@ -152,17 +173,37 @@ namespace Tanks
             foreach (Tank tank in tanks)
             {
                 sprite = new Bitmap(tank.Sprite);
-                sprite.RotateFlip(tank.TankDirection);
+                sprite.RotateFlip(tank.Direction);
                 g.DrawImage(sprite, tank.posX, tank.posY);
             }
 
-        }
+            List<Bullet> bullets = data.GetBullets();
+            foreach (Bullet bullet in bullets)
+            {
+                sprite = new Bitmap(bullet.Sprite);
+                sprite.RotateFlip(bullet.Direction);
+                g.DrawImage(sprite, bullet.posX, bullet.posY);
+            }
 
-        
+        }
+        bool collides(int x, int y, int r, int b, int x2, int y2, int r2, int b2)
+        {
+            return //r >= x2 || x < r2 || b >= y2 || y < b2;
+                r <= x2 || x > r2 || b <= y2 || y > b2;
+            //((x2 <= r) || (y2 <= b)) || ((r2 >= x) || (b2>=y));
+        }
+        bool boxCollides(int x, int y, int[] spritesize, int x2, int y2, int[] spritesize2)
+        {
+            return !collides(x, y, x + spritesize[0]-5, y + spritesize[1],
+                    x2, y2,
+                    x2 + spritesize2[0]-5, y2 + spritesize2[1]);
+        }
        
 
         private void CheckEntityBounds(Entity entity)
         {
+            List<Wall> walls = data.GetWalls();
+
             if (entity.posX < 0)
             {
                 entity.posX = 0;
@@ -171,6 +212,34 @@ namespace Tanks
             {
                 entity.posX = MapWidth - entity.SpriteSize[0];
             }
+            foreach (var wall in walls)
+            {
+                if (boxCollides(wall.posX, wall.posY, wall.SpriteSize, entity.posX, entity.posY, entity.SpriteSize))
+                {
+                   
+                    if (entity.Direction == RotateFlipType.Rotate180FlipNone)
+                    {
+                        entity.posY -= 10;
+                    }
+                    else
+                    if (entity.Direction == RotateFlipType.RotateNoneFlipNone)
+                    {
+                        entity.posY += 10;
+                    }
+                    else
+                    if (entity.Direction == RotateFlipType.Rotate270FlipNone)
+                    {
+                        entity.posX += 10;
+                    }else
+                    if (entity.Direction == RotateFlipType.Rotate90FlipNone)
+                    {
+                        entity.posX -= 10;
+                    }
+                }
+
+
+            }
+           
 
             if (entity.posY < 0)
             {
@@ -180,7 +249,10 @@ namespace Tanks
             {
                 entity.posY = MapHeight - entity.SpriteSize[1];
             }
+
         }
+
+        
 
 
     }
