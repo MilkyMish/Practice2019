@@ -31,7 +31,6 @@
             this.components = new System.ComponentModel.Container();
             this.Map = new System.Windows.Forms.PictureBox();
             this.timer = new System.Windows.Forms.Timer(this.components);
-            this.imageList = new System.Windows.Forms.ImageList(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.Map)).BeginInit();
             this.SuspendLayout();
             // 
@@ -46,12 +45,6 @@
             // timer
             // 
             this.timer.Tick += new System.EventHandler(this.timer_Tick);
-            // 
-            // imageList
-            // 
-            this.imageList.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
-            this.imageList.ImageSize = new System.Drawing.Size(60, 83);
-            this.imageList.TransparentColor = System.Drawing.Color.Transparent;
             // 
             // MainForm
             // 
@@ -72,7 +65,6 @@
 
         private System.Windows.Forms.PictureBox Map;
         private System.Windows.Forms.Timer timer;
-        private System.Windows.Forms.ImageList imageList;
     }
 }
 

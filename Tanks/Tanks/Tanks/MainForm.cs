@@ -20,13 +20,9 @@ namespace Tanks
       
         private int MapWidth;
         private int MapHeight;
-
+        LogForm logForm;
         DateTime lastTime;
         int gameTime;
-
-        //List<Bullet> bullets = new List<Bullet>();
-     
-        
 
 
         public MainForm()
@@ -37,42 +33,43 @@ namespace Tanks
         private void Game_Loop()
         {
             DateTime now = DateTime.Now;
-            
             var dt = (now - lastTime);
-
             Update(dt);
             //render();
             
             lastTime = now;                       
         }
+        private void Reset()
+        {
+            Configuration startConf = data.Start();
+
+            data.Reset();
+
+            Map.BackColor = Color.Black;
+            
+            data.AddTanks(startConf.TanksCount);
+            data.GenerateWalls();
+
+
+            Map.Paint += new PaintEventHandler(this.Map_Paint);
+           
+            this.Controls.Add(Map);
+        }
 
         private void MainForm_Load(object sender, EventArgs e)
         {
             Configuration startConf = data.Start();
-
             MapWidth = startConf.MapWidth;
             MapHeight = startConf.MapHeight;
             Map.Size = new Size(MapWidth, MapHeight);
-
             Map.BackColor = Color.Black;
-
-            data.AddTanks(startConf.TanksCount);
-            data.GenerateWalls();
-            
-
-            Map.Paint += new PaintEventHandler(this.Map_Paint);
-            Map.KeyDown += Map_KeyDown;
-            this.Controls.Add(Map);
-            //tanks = (List<Tank>)data.GetTanks();
-            //tanks = (Tank[])data.GetTanks();
-
-
-            //START 
-
+            Reset();
             lastTime = DateTime.Now;
+
+            logForm = new LogForm(data);
+            logForm.Show();
             timer.Interval = 1000 / 60;
             timer.Start();
-
         }
 
         private void Update(TimeSpan dt)
@@ -96,7 +93,7 @@ namespace Tanks
 
             Kolobok kolobok = data.GetKolobok();
 
-            List<Bullet> bullets = data.GetBullets();
+            List<Bullet> bullets = (List<Bullet>)data.GetBullets();
             for (int i = 0; i < bullets.Count; i++)
             {
                 bullets[i].Move();
@@ -107,6 +104,7 @@ namespace Tanks
             bullets = CheckEntityBounds(bullets);
             data.UpdateBullets(bullets);
 
+            logForm.refreshLog();
             Map.Refresh();
         }
 
@@ -150,16 +148,13 @@ namespace Tanks
         }
 
 
-        private void Map_KeyDown(object sender, KeyEventArgs e)
-        {
-            
-        }
+      
 
         private void Map_Paint(object sender, System.Windows.Forms.PaintEventArgs e)
         {
             Graphics g = e.Graphics;
 
-            List<Wall> walls = data.GetWalls();
+            List<Wall> walls = (List<Wall>)data.GetWalls();
             Bitmap sprite = new Bitmap(walls[0].Sprite);
 
             foreach (Wall wall in walls)
@@ -183,7 +178,7 @@ namespace Tanks
                 g.DrawImage(sprite, tank.posX, tank.posY);
             }
 
-            List<Bullet> bullets = data.GetBullets();
+            List<Bullet> bullets = (List<Bullet>)data.GetBullets();
             foreach (Bullet bullet in bullets)
             {
                 sprite = new Bitmap(bullet.Sprite);
@@ -226,7 +221,7 @@ namespace Tanks
 
         private void CheckEntityBounds(Entity entity)
         {
-            List<Wall> walls = data.GetWalls();
+            List<Wall> walls = (List<Wall>)data.GetWalls();
             List<Tank> tanks = (List < Tank > )data.GetTanks();
             
 
@@ -303,7 +298,7 @@ namespace Tanks
         }
         private List<Bullet> CheckEntityBounds(List<Bullet> bullets)
         {
-            List<Wall> walls = data.GetWalls();
+            List<Wall> walls = (List<Wall>)data.GetWalls();
             List<Bullet> bulletsTemp = new List<Bullet>(bullets);
             List<Tank> tanks = (List<Tank>)data.GetTanks();
             List<Tank> tanksTemp = (List<Tank>)data.GetTanks();
@@ -362,7 +357,7 @@ namespace Tanks
                     Kolobok kolobok = data.GetKolobok();
                     if ((boxCollides(kolobok.posX, kolobok.posY, kolobok.SpriteSize, bullet)))
                     {
-                        data.GameOver();
+                        timer.Stop();
                     }
                 }
             }
@@ -370,7 +365,12 @@ namespace Tanks
             return bulletsTemp;
         }
 
-
-
+        private void btn_newGame_Click(object sender, EventArgs e)
+        {
+        
+            //Map.Focus();
+            //Focus();
+           
+        }
     }
 }

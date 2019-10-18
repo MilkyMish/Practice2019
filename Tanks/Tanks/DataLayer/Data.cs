@@ -115,7 +115,7 @@ namespace DataLayer
             return Walls;
 
         }
-        public List<Wall> GetWalls()
+        public IEnumerable<Wall> GetWalls()
         {
             return Walls;
         }
@@ -123,7 +123,7 @@ namespace DataLayer
         #endregion Walls
 
         #region Bullets
-        public List<Bullet> GetBullets()
+        public IEnumerable<Bullet> GetBullets()
         {
             return Bullets;
         }
@@ -145,7 +145,16 @@ namespace DataLayer
 
         #endregion Bullets
 
+        public void Reset()
+        {
+            Tanks = new List<Tank>();
+            Walls = new List<Wall>();
+            Bullets = new List<Bullet>();
+            Kolobok kolobok = new Kolobok();
+
+        }
+    }
 
         #endregion Resources
-    }
+    
 }

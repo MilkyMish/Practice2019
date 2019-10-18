@@ -21,11 +21,13 @@ namespace DataLayer
         IEnumerable<Tank> GetTanks();
 
         List<Wall> GenerateWalls();
-        List<Wall> GetWalls();
+        IEnumerable<Wall> GetWalls();
 
-        List<Bullet> GetBullets();
+        IEnumerable<Bullet> GetBullets();
         void AddBullet(Bullet bullet);
         void RemoveBullet(Bullet bullet);
         void UpdateBullets(List<Bullet> bullets);
+
+        void Reset();
     }
 }

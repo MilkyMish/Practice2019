@@ -7,6 +7,7 @@ using Entities;
 using DataLayer;
 using System.Drawing;
 using System.Threading;
+using System.ComponentModel;
 
 namespace DataBusinessLayer
 {
@@ -25,7 +26,7 @@ namespace DataBusinessLayer
 
         public Configuration Start()
         {
-            defaultConf = new Configuration();  
+            defaultConf = new Configuration();
             return Game.StartGame(defaultConf);
         }
 
@@ -54,8 +55,8 @@ namespace DataBusinessLayer
             Entity Tanks = new Entity();
             Random random = new Random();
             int[] position = new int[2];
-            defaultConf = new Configuration(); 
-            position[0] = random.Next(10, defaultConf.MapWidth - Tanks.SpriteSize[0]); 
+            defaultConf = new Configuration();
+            position[0] = random.Next(10, defaultConf.MapWidth - Tanks.SpriteSize[0]);
             position[1] = random.Next(10, defaultConf.MapHeight - Tanks.SpriteSize[1]);
             return position;
         }
@@ -72,15 +73,20 @@ namespace DataBusinessLayer
             }
         }
 
+        public void Reset()
+        {
+            Game.Reset();
+        }
+
         public void GameOver()
         {
-            Thread.Sleep(1000000);
+            // Thread.Sleep(1000000);
         }
 
         public IEnumerable<Tank> GetTanks()
-            {
+        {
             return Game.GetTanks();
-            }
+        }
         /*
         public Tank TankMove(Tank tank)
         {
@@ -115,7 +121,7 @@ namespace DataBusinessLayer
             Game.UpdateTanks(tanks);
         }
 
-        public List<Wall> GetWalls()
+        public IEnumerable<Wall> GetWalls()
         {
             return Game.GetWalls();
         }
@@ -132,7 +138,7 @@ namespace DataBusinessLayer
         {
             Game.RemoveBullet(bullet);
         }
-        public List<Bullet> GetBullets()
+        public IEnumerable<Bullet> GetBullets()
         {
             return Game.GetBullets();
         }
@@ -142,7 +148,28 @@ namespace DataBusinessLayer
         }
         //public void BulletMove(Bullet bullet)
         //{
-            
+
         //}
+
+        public BindingList<LogView> UpdateLog()
+        {
+            BindingList<LogView> logList = new BindingList<LogView>();
+            //BindingList<Entity> entities = new BindingList<Entity>();
+            //BindingList<Bullet> bullets = (BindingList<Bullet>)Game.GetBullets();
+          
+
+            Kolobok kolobok = GetKolobok();
+            LogView kolobokLog = new LogView(kolobok);
+            logList.Add(kolobokLog);
+
+            List<Tank> tanks = (List<Tank>)Game.GetTanks();
+            foreach (Tank tank in tanks)
+            {
+                LogView tankView = new LogView(tank);
+                logList.Add(tankView);
+            }
+            return logList;
+        }
+
     }
 }
