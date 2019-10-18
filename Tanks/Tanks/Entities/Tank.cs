@@ -15,15 +15,16 @@ namespace Entities
         private Random random = new Random();
         private DirectionMove goTo = DirectionMove.UP;
         int moveCount = 0;
-        int LastX;
-        int LastY;
+        public bool fire = false;
+        //int LastX;
+        //int LastY;
 
         public Tank (int[] position)
         {
             posX = position[0];
             posY = position[1];
-            LastX = posX;
-            LastY = posY;
+            //LastX = posX;
+            //LastY = posY;
         }
 
         public Tank()
@@ -63,6 +64,7 @@ namespace Entities
             {
                 if (moveCount>10)
                 {
+                    moveCount = 0;
                     switch (check)
                     {
                         case 0:
