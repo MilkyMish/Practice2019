@@ -86,6 +86,10 @@ namespace Tanks
                 //tanks[i] = temp;
                 //tanks[i] = data.TankMove(tanks[i]);
                 tanks[i].Move();
+                if (tanks[i].fire)
+                {
+                    data.AddBullet(new Bullet(tanks[i], true));
+                }
                 CheckEntityBounds(tanks[i]);
             }
             data.UpdateTanks(tanks);
@@ -138,7 +142,7 @@ namespace Tanks
             }
             if (e.KeyChar == ' ')
             {
-                data.AddBullet(new Bullet(kolobok));
+                data.AddBullet(new Bullet(kolobok, false));
                 
             }
             data.UpdateKolobok(kolobok);
@@ -340,17 +344,27 @@ namespace Tanks
                     }
                 }
 
-                foreach (Tank tank in tanks)
+                if (bullet.enemyFire == false)
                 {
-                    if (boxCollides(tank.posX, tank.posY, tank.SpriteSize, bullet))
+                    foreach (Tank tank in tanks)
                     {
-                        tanksTemp.Remove(tank);
-                        bulletsTemp.Remove(bullet);
-                        break;
+                        if (boxCollides(tank.posX, tank.posY, tank.SpriteSize, bullet))
+                        {
+                            tanksTemp.Remove(tank);
+                            bulletsTemp.Remove(bullet);
+                            break;
+                        }
+                    }
+
+                }
+                else
+                {
+                    Kolobok kolobok = data.GetKolobok();
+                    if ((boxCollides(kolobok.posX, kolobok.posY, kolobok.SpriteSize, bullet)))
+                    {
+                        data.GameOver();
                     }
                 }
-
-
             }
             data.UpdateTanks(tanksTemp);
             return bulletsTemp;

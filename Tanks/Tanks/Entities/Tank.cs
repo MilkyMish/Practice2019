@@ -37,6 +37,7 @@ namespace Entities
             int check = random.Next(10);
             if (check > 3)
             {
+                fire = false;
                 switch (goTo)
                 {
                     case DirectionMove.UP:
@@ -65,6 +66,7 @@ namespace Entities
                 if (moveCount>10)
                 {
                     moveCount = 0;
+                    fire = true;
                     switch (check)
                     {
                         case 0:

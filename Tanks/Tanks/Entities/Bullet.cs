@@ -12,10 +12,13 @@ namespace Entities
         public string Sprite = @"..\..\..\img\bullet.png";
         public int Speed = 13;
         new public int[] SpriteSize = new int[2] { 24, 63 };
-       // bool isDone = false;
+        public bool enemyFire = false;
 
-        public Bullet(Entity entity)
+
+
+        public Bullet(Entity entity, bool enemyFire)
         {
+            this.enemyFire = enemyFire;
             this.Direction = entity.Direction;
             switch (Direction)
             {

@@ -72,11 +72,16 @@ namespace DataBusinessLayer
             }
         }
 
+        public void GameOver()
+        {
+            Thread.Sleep(1000000);
+        }
+
         public IEnumerable<Tank> GetTanks()
             {
             return Game.GetTanks();
             }
-
+        /*
         public Tank TankMove(Tank tank)
         {
             Random random = new Random();
@@ -103,7 +108,7 @@ namespace DataBusinessLayer
                     return tank;
 
             }
-        }
+        }*/
 
         public void UpdateTanks(List<Tank> tanks)
         {
