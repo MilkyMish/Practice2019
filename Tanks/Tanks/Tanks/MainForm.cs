@@ -188,20 +188,37 @@ namespace Tanks
             }
 
         }
+
         bool collides(int x, int y, int r, int b, int x2, int y2, int r2, int b2)
         {
-            return //r >= x2 || x < r2 || b >= y2 || y < b2;
-                r <= x2 || x > r2 || b <= y2 || y > b2;
-            //((x2 <= r) || (y2 <= b)) || ((r2 >= x) || (b2>=y));
+            return  r <= x2 || x > r2 || b <= y2 || y > b2;
+           
         }
-        //метод не учитывает повороты
+
         bool boxCollides(int x, int y, int[] spritesize, int x2, int y2, int[] spritesize2)
         {
             return !collides(x, y, x + spritesize[0]-5, y + spritesize[1],
                     x2, y2,
                     x2 + spritesize2[0]-5, y2 + spritesize2[1]);
         }
-       
+        bool boxCollides(int x, int y, int[] spritesize, Bullet bullet)
+        {
+            int x2=bullet.posX;
+            int y2=bullet.posY;
+            int[] spritesize2 = bullet.SpriteSize;
+
+            if (bullet.Direction == RotateFlipType.Rotate90FlipNone || bullet.Direction == RotateFlipType.Rotate270FlipNone)
+            {
+                return !collides(x, y, x + spritesize[0] - 5, y + spritesize[1],
+                   x2, y2,
+                   x2 + spritesize2[1] - 5, y2 + spritesize2[0]);
+            }
+
+            return !collides(x, y, x + spritesize[0] - 5, y + spritesize[1],
+                    x2, y2,
+                    x2 + spritesize2[0] - 5, y2 + spritesize2[1]);
+        }
+
 
         private void CheckEntityBounds(Entity entity)
         {
@@ -258,7 +275,9 @@ namespace Tanks
         {
             List<Wall> walls = data.GetWalls();
             List<Bullet> bulletsTemp = new List<Bullet>(bullets);
-           
+            List<Tank> tanks = (List<Tank>)data.GetTanks();
+            List<Tank> tanksTemp = (List<Tank>)data.GetTanks();
+
             foreach (Bullet bullet in bullets)
             {
                 if (bullet.posX < 0)
@@ -271,31 +290,43 @@ namespace Tanks
                     bulletsTemp.Remove(bullet);
                     break;
                 }
-                foreach (var wall in walls)
-                {
-                    if (boxCollides(wall.posX, wall.posY, wall.SpriteSize, bullet.posX, bullet.posY, bullet.SpriteSize))
-                    {
-
-                        bulletsTemp.Remove(bullet);
-                        break;
-                    }
-
-
-                }
-
 
                 if (bullet.posY < 0)
                 {
                     bulletsTemp.Remove(bullet);
                     break;
                 }
-                else if (bullet.posY > MapHeight - bullet.SpriteSize[1])
+                else 
+                if ((bullet.posY > MapHeight - bullet.SpriteSize[1]) && 
+                    !(bullet.Direction == RotateFlipType.Rotate270FlipNone || bullet.Direction == RotateFlipType.Rotate90FlipNone)) 
                 {
                     bulletsTemp.Remove(bullet);
                     break;
                 }
 
+                foreach (Wall wall in walls)
+                {
+                    if (boxCollides(wall.posX, wall.posY, wall.SpriteSize, bullet))
+                    {
+
+                        bulletsTemp.Remove(bullet);
+                        break;
+                    }
+                }
+
+                foreach (Tank tank in tanks)
+                {
+                    if (boxCollides(tank.posX, tank.posY, tank.SpriteSize, bullet))
+                    {
+                        tanksTemp.Remove(tank);
+                        bulletsTemp.Remove(bullet);
+                        break;
+                    }
+                }
+
+
             }
+            data.UpdateTanks(tanksTemp);
             return bulletsTemp;
         }
 
