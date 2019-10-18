@@ -20,7 +20,7 @@ namespace Entities
             switch (Direction)
             {
                 case RotateFlipType.RotateNoneFlipNone:
-                    this.posX = entity.posX + entity.SpriteSize[0] / 2;
+                    this.posX = entity.posX + (entity.SpriteSize[0] / 2) - 10;
                     this.posY = entity.posY - SpriteSize[1];
                     break;
                 case RotateFlipType.Rotate90FlipNone:
@@ -28,7 +28,7 @@ namespace Entities
                     this.posY = entity.posY + SpriteSize[1]/2;
                     break;
                 case RotateFlipType.Rotate180FlipNone:
-                    this.posX = entity.posX + entity.SpriteSize[0] / 2;
+                    this.posX = entity.posX + (entity.SpriteSize[0] / 2) -10;
                     this.posY = entity.posY + SpriteSize[1];
                     break;
                 case RotateFlipType.Rotate270FlipNone:

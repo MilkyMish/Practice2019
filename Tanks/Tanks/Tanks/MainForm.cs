@@ -84,7 +84,8 @@ namespace Tanks
             {
                 //Tank temp = data.TankMove(tanks[i]);
                 //tanks[i] = temp;
-                tanks[i] = data.TankMove(tanks[i]);
+                //tanks[i] = data.TankMove(tanks[i]);
+                tanks[i].Move();
                 CheckEntityBounds(tanks[i]);
             }
             data.UpdateTanks(tanks);
@@ -270,7 +271,6 @@ namespace Tanks
                 entity.posY = MapHeight - entity.SpriteSize[1];
             }
         }
-
         private List<Bullet> CheckEntityBounds(List<Bullet> bullets)
         {
             List<Wall> walls = data.GetWalls();

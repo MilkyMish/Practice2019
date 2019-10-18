@@ -45,6 +45,7 @@
     <Compile Include="Apple.cs" />
     <Compile Include="Bullet.cs" />
     <Compile Include="Configuration.cs" />
+    <Compile Include="DirectionMove.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="Kolobok.cs" />
     <Compile Include="PackmanController.cs" />
