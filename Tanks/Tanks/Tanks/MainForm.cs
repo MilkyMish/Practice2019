@@ -89,7 +89,9 @@ namespace Tanks
                 CheckEntityBounds(tanks[i]);
             }
             data.UpdateTanks(tanks);
+
             Kolobok kolobok = data.GetKolobok();
+
             List<Bullet> bullets = data.GetBullets();
             for (int i = 0; i < bullets.Count; i++)
             {
@@ -100,13 +102,10 @@ namespace Tanks
             CheckEntityBounds(kolobok);
             bullets = CheckEntityBounds(bullets);
             data.UpdateBullets(bullets);
+
             Map.Refresh();
         }
 
-        //void handleInput(DateTime dt)
-        //{
-
-        //}
 
         private void timer_Tick(object sender, EventArgs e)
         {
@@ -224,6 +223,8 @@ namespace Tanks
         private void CheckEntityBounds(Entity entity)
         {
             List<Wall> walls = data.GetWalls();
+            List<Tank> tanks = (List < Tank > )data.GetTanks();
+            
 
             if (entity.posX < 0)
             {
@@ -233,7 +234,7 @@ namespace Tanks
             {
                 entity.posX = MapWidth - entity.SpriteSize[0];
             }
-            foreach (var wall in walls)
+            foreach (Wall wall in walls)
             {
                 if (boxCollides(wall.posX, wall.posY, wall.SpriteSize, entity.posX, entity.posY, entity.SpriteSize))
                 {
@@ -257,10 +258,35 @@ namespace Tanks
                         entity.posX -= 10;
                     }
                 }
+            }
+            foreach (Tank tank in tanks)
+            {
+                if ((tank.posX!=entity.posX || tank.posY!= entity.posY) && boxCollides(tank.posX, tank.posY, tank.SpriteSize, entity.posX, entity.posY, entity.SpriteSize))
+                {
+
+                    if (entity.Direction == RotateFlipType.Rotate180FlipNone)
+                    {
+                        entity.posY -= 10;
+                    }
+                    else
+                    if (entity.Direction == RotateFlipType.RotateNoneFlipNone)
+                    {
+                        entity.posY += 10;
+                    }
+                    else
+                    if (entity.Direction == RotateFlipType.Rotate270FlipNone)
+                    {
+                        entity.posX += 10;
+                    }
+                    else
+                    if (entity.Direction == RotateFlipType.Rotate90FlipNone)
+                    {
+                        entity.posX -= 10;
+                    }
+                }
 
 
             }
-           
 
             if (entity.posY < 0)
             {
