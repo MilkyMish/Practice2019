@@ -66,8 +66,16 @@ namespace Tanks
             Reset();
             lastTime = DateTime.Now;
 
-            logForm = new LogForm(data);
-            logForm.Show();
+            logForm = new LogForm(data)
+            {
+                StartPosition = FormStartPosition.Manual,
+                Left = ClientSize.Width,
+                Top = 0,
+                
+            }; 
+
+            logForm.Show(this);
+
             timer.Interval = 1000 / 60;
             timer.Start();
         }
@@ -104,7 +112,7 @@ namespace Tanks
             bullets = CheckEntityBounds(bullets);
             data.UpdateBullets(bullets);
             
-            logForm.refreshLog();
+            logForm.RefreshLog();
           
             Map.Refresh();
             
