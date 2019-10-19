@@ -36,7 +36,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(385, 439);
             this.Name = "LogForm";
-            this.Text = "LogForm";
             this.Load += new System.EventHandler(this.LogForm_Load);
             this.ResumeLayout(false);
 

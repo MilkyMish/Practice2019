@@ -103,9 +103,11 @@ namespace Tanks
             CheckEntityBounds(kolobok);
             bullets = CheckEntityBounds(bullets);
             data.UpdateBullets(bullets);
-
+            
             logForm.refreshLog();
+          
             Map.Refresh();
+            
         }
 
 

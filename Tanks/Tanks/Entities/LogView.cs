@@ -8,9 +8,9 @@ namespace Entities
 {
     public class LogView
     {
-        string Name;
-        int X;
-        int Y;
+        public string Name;
+        public int X;
+        public int Y;
         
 
         public LogView(Tank tank)
