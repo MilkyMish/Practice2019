@@ -11,7 +11,7 @@ namespace Entities
     {
         public string Sprite = @"..\..\..\img\bullet.png";
         public int Speed = 13;
-        new public int[] SpriteSize = new int[2] { 24, 63 };
+        new public int[] SpriteSize = new int[2] { 14, 40 }; //24 63
         public bool enemyFire = false;
 
 

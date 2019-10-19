@@ -77,7 +77,7 @@ namespace Tanks
                 
             }; 
 
-            logForm.Show(this);
+            logForm.Show();
 
             Bitmap spriteTemp = new Bitmap(@"..\..\..\img\Apple.png");
 
@@ -152,22 +152,35 @@ namespace Tanks
             Kolobok kolobok = data.GetKolobok();
             if (e.KeyChar=='w')
             {
-                kolobok.posY -= kolobok.Speed;
+                for (int i = 0; i < kolobok.Speed; i++)
+                {
+                    kolobok.posY -= 1;
+                }
                 kolobok.Direction = RotateFlipType.RotateNoneFlipNone;
             }
             if (e.KeyChar == 's')
             {
-                kolobok.posY += kolobok.Speed;
+                for (int i = 0; i < kolobok.Speed; i++)
+                {
+                    kolobok.posY += 1;
+                }
                 kolobok.Direction = RotateFlipType.Rotate180FlipNone;
             }
             if (e.KeyChar == 'a')
             {
-                kolobok.posX -= kolobok.Speed;
+                for (int i = 0; i < kolobok.Speed; i++)
+                {
+                    kolobok.posX -= 1;
+                }
+                
                 kolobok.Direction = RotateFlipType.Rotate270FlipNone;
             }
             if (e.KeyChar == 'd')
             {
-                kolobok.posX += kolobok.Speed;
+                for (int i = 0; i < kolobok.Speed; i++)
+                {
+                    kolobok.posX += 1;
+                }
                 kolobok.Direction = RotateFlipType.Rotate90FlipNone;
             }
             if (e.KeyChar == ' ')
@@ -214,7 +227,8 @@ namespace Tanks
             List<Bullet> bullets = (List<Bullet>)data.GetBullets();
             foreach (Bullet bullet in bullets)
             {
-                sprite = new Bitmap(bullet.Sprite);
+                Bitmap spriteTemp = new Bitmap(bullet.Sprite);
+                sprite = new Bitmap(spriteTemp, new Size(bullet.SpriteSize[0], bullet.SpriteSize[1]));
                 sprite.RotateFlip(bullet.Direction);
                 g.DrawImage(sprite, bullet.posX, bullet.posY);
             }
@@ -262,7 +276,12 @@ namespace Tanks
                     x2, y2,
                     x2 + spritesize2[0] - 5, y2 + spritesize2[1]);
         }
-
+        bool boxCollides(Wall wall, int x2, int y2, int[] spritesize2)
+        {
+            return !collides(wall.posX, wall.posY+15, wall.posX + wall.SpriteSize[0] - 5, wall.posY + wall.SpriteSize[1]-15,
+                    x2, y2,
+                    x2 + spritesize2[0] - 5, y2 + spritesize2[1]);
+        }
 
         private void CheckEntityBounds(Entity entity)
         {
@@ -280,7 +299,7 @@ namespace Tanks
             }
             foreach (Wall wall in walls)
             {
-                if (boxCollides(wall.posX, wall.posY, wall.SpriteSize, entity.posX, entity.posY, entity.SpriteSize))
+                if (boxCollides(wall, entity.posX, entity.posY, entity.SpriteSize))
                 {
                    
                     if (entity.Direction == RotateFlipType.Rotate180FlipNone)
@@ -402,6 +421,7 @@ namespace Tanks
                     Kolobok kolobok = data.GetKolobok();
                     if ((boxCollides(kolobok.posX, kolobok.posY, kolobok.SpriteSize, bullet)))
                     {
+
                         timer.Stop();
                     }
                 }
