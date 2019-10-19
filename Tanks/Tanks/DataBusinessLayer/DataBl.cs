@@ -29,7 +29,7 @@ namespace DataBusinessLayer
             defaultConf = new Configuration();
             return Game.StartGame(defaultConf);
         }
-
+        #region Kolobok
         public void CreateKolobok(Kolobok kolobok)
         {
             Game.CreateKolobok(kolobok);
@@ -43,8 +43,9 @@ namespace DataBusinessLayer
         {
             Game.UpdateKolobok(kolobok);
         }
+        #endregion Kolobok
 
-
+        #region Tanks
         public void AddTank(Tank tank)
         {
             Game.AddTank(tank);
@@ -71,16 +72,6 @@ namespace DataBusinessLayer
                 Game.AddTank(tank);
                 Thread.Sleep(100);
             }
-        }
-
-        public void Reset()
-        {
-            Game.Reset();
-        }
-
-        public void GameOver()
-        {
-            // Thread.Sleep(1000000);
         }
 
         public IEnumerable<Tank> GetTanks()
@@ -120,7 +111,19 @@ namespace DataBusinessLayer
         {
             Game.UpdateTanks(tanks);
         }
+        #endregion Tanks
 
+        public void Reset()
+        {
+            Game.Reset();
+        }
+
+        public void GameOver()
+        {
+            // Thread.Sleep(1000000);
+        }
+
+        #region Walls
         public IEnumerable<Wall> GetWalls()
         {
             return Game.GetWalls();
@@ -129,7 +132,9 @@ namespace DataBusinessLayer
         {
             return Game.GenerateWalls();
         }
+        #endregion Walls
 
+        #region Bullets
         public void AddBullet(Bullet bullet)
         {
             Game.AddBullet(bullet);
@@ -150,6 +155,36 @@ namespace DataBusinessLayer
         //{
 
         //}
+        #endregion Bullets
+
+        #region Apples
+
+        public Apple AppleSpawn()
+        {          
+            Random random = new Random();
+            //List<Wall> walls = (List<Wall>)Game.GetWalls();
+            Thread.Sleep(20);
+            int posX = random.Next(defaultConf.MapWidth);
+            int posY = random.Next(defaultConf.MapHeight);
+            return new Apple(posX, posY);
+        }
+
+        public void AddApple()
+        {
+            Game.AddApple(AppleSpawn());
+        }
+
+        public void RemoveApple(Apple apple)
+        {
+            Game.RemoveApple(apple);
+        }
+
+        public IEnumerable<Apple> GetApples()
+        {
+            return Game.GetApples();
+        }
+
+        #endregion Apples
 
         public BindingList<LogView> UpdateLog()
         {

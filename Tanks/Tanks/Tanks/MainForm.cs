@@ -23,8 +23,8 @@ namespace Tanks
         LogForm logForm;
         DateTime lastTime;
         int gameTime;
-
-
+        int AppleCounter;
+        Label lbl_AppleCounter;
         public MainForm()
         {
             InitializeComponent();
@@ -49,7 +49,10 @@ namespace Tanks
             
             data.AddTanks(startConf.TanksCount);
             data.GenerateWalls();
-
+            for (int i = 0; i < startConf.AppleCount; i++)
+            {
+                data.AddApple();
+            }
 
             Map.Paint += new PaintEventHandler(this.Map_Paint);
            
@@ -75,6 +78,21 @@ namespace Tanks
             }; 
 
             logForm.Show(this);
+
+            Bitmap spriteTemp = new Bitmap(@"..\..\..\img\Apple.png");
+
+            PictureBox applePic = new PictureBox();
+            applePic.Location = new Point(10, 40);
+            applePic.Size = new Size(40, 40);
+            applePic.Image = new Bitmap(spriteTemp, new Size(40, 40));
+            this.Controls.Add(applePic);
+
+            lbl_AppleCounter = new Label();
+            lbl_AppleCounter.Location = new Point(60,50);           
+            lbl_AppleCounter.Text = AppleCounter.ToString();
+            this.Controls.Add(lbl_AppleCounter);
+
+            Refresh();
 
             timer.Interval = 1000 / 60;
             timer.Start();
@@ -109,9 +127,13 @@ namespace Tanks
             data.UpdateBullets(bullets);
             
             CheckEntityBounds(kolobok);
+
             bullets = CheckEntityBounds(bullets);
             data.UpdateBullets(bullets);
-            
+
+            List<Apple> apples = (List<Apple>)data.GetApples();
+            CheckEntityBounds(apples);
+
             logForm.RefreshLog();
           
             Map.Refresh();
@@ -158,7 +180,8 @@ namespace Tanks
         }
 
 
-      
+
+        #region Drawing
 
         private void Map_Paint(object sender, System.Windows.Forms.PaintEventArgs e)
         {
@@ -195,9 +218,21 @@ namespace Tanks
                 sprite.RotateFlip(bullet.Direction);
                 g.DrawImage(sprite, bullet.posX, bullet.posY);
             }
+          
+            List<Apple> apples = (List<Apple>)data.GetApples();         
+            foreach (Apple apple in apples)
+            {
+                Bitmap spriteTemp = new Bitmap(apple.Sprite);
+                sprite = new Bitmap(spriteTemp, new Size(apple.SpriteSize[0], apple.SpriteSize[1]));
+                
+                g.DrawImage(sprite, apple.posX, apple.posY);
+            }
 
         }
 
+#endregion Drawing
+
+        #region Collisions
         bool collides(int x, int y, int r, int b, int x2, int y2, int r2, int b2)
         {
             return  r <= x2 || x > r2 || b <= y2 || y > b2;
@@ -374,7 +409,38 @@ namespace Tanks
             data.UpdateTanks(tanksTemp);
             return bulletsTemp;
         }
+        private void CheckEntityBounds(List<Apple> apples)
+        {
+            Kolobok kolobok = data.GetKolobok();
+            List<Wall> walls = (List<Wall>)data.GetWalls();
+            List<Apple> applesTemp = new List<Apple>(apples);
+            foreach (Apple apple in applesTemp)
+            {
+                if (boxCollides(kolobok.posX, kolobok.posY, kolobok.SpriteSize, apple.posX, apple.posY, apple.SpriteSize))
+                {
+                    data.RemoveApple(apple);
+                    lbl_AppleCounter.Text = (++AppleCounter).ToString();
+                    data.AddApple();
+                }
+                else
+                {
+                    foreach (Wall wall in walls)
+                    {
+                        if (boxCollides(wall.posX, wall.posY, wall.SpriteSize, apple.posX, apple.posY, apple.SpriteSize))
+                        {
+                            apple.posY -= 45;
 
+                        }
+                    }
+                }
+            }
+           
+
+            
+
+        }
+
+        #endregion Collisions
         private void btn_newGame_Click(object sender, EventArgs e)
         {
         
@@ -382,5 +448,7 @@ namespace Tanks
             //Focus();
            
         }
+
+     
     }
 }

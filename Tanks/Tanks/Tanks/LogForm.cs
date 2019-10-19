@@ -22,7 +22,7 @@ namespace Tanks
             InitializeComponent();
             data = _data;
             _grid.Dock = DockStyle.Fill;
-            // _grid
+
             //_grid.DataSource = data.UpdateLog();
 
             _grid.Columns.Add("Name", "Name");
@@ -34,17 +34,16 @@ namespace Tanks
 
         private void LogForm_Load(object sender, EventArgs e)
         {
-            
-           
-            refreshLog();
+            RefreshLog();
         }
-        public void refreshLog()
+
+        public void RefreshLog()
         {
             //var source = new BindingSource(data.UpdateLog(), null);
             //_grid.DataSource = source;
             _grid.Rows.Clear();
             BindingList<LogView> entities = data.UpdateLog();
-            for (int i = 0; i < entities.Count - 1; i++)
+            for (int i = 0; i < entities.Count ; i++)
             {
                     _grid.Rows.Add();
                     _grid.Rows[i].Cells[0].Value = entities[i].Name;

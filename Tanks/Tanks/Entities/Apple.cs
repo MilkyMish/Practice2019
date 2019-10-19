@@ -8,5 +8,14 @@ namespace Entities
 {
     public class Apple : Entity
     {
+        public string Sprite = @"..\..\..\img\Apple.png";
+        new public int[] SpriteSize = new int[2] { 40, 40 };
+
+        public Apple(int posX, int posY)
+            {
+            this.posX = posX;
+            this.posY = posY;
+        }
+
     }
 }

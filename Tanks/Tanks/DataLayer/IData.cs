@@ -28,6 +28,12 @@ namespace DataLayer
         void RemoveBullet(Bullet bullet);
         void UpdateBullets(List<Bullet> bullets);
 
+        IEnumerable<Apple> GetApples();
+        void AddApple(Apple apple);
+        void RemoveApple(Apple apple);
+        void UpdateApples(List<Apple> apples);
+
+
         void Reset();
     }
 }

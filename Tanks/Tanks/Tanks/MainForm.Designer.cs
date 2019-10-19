@@ -36,11 +36,12 @@
             // 
             // Map
             // 
-            this.Map.Location = new System.Drawing.Point(146, 12);
+            this.Map.Location = new System.Drawing.Point(168, 12);
             this.Map.Name = "Map";
             this.Map.Size = new System.Drawing.Size(494, 414);
             this.Map.TabIndex = 0;
             this.Map.TabStop = false;
+         
             // 
             // timer
             // 
@@ -50,7 +51,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(826, 603);
+            this.ClientSize = new System.Drawing.Size(698, 603);
             this.Controls.Add(this.Map);
             this.Name = "MainForm";
             this.Text = "Tanks";

@@ -27,7 +27,7 @@ namespace DataLayer
 
         #region Resources
         private List<Tank> Tanks = new List<Tank>();
-        private List<Apple> Apples;
+        private List<Apple> Apples = new List<Apple>();
         private List<Wall> Walls = new List<Wall>();
         private List<Bullet> Bullets = new List<Bullet>();
 
@@ -145,12 +145,38 @@ namespace DataLayer
 
         #endregion Bullets
 
+        #region Apples
+
+        public IEnumerable<Apple> GetApples()
+        {
+            return Apples;
+        }
+
+        public void AddApple(Apple apple)
+        {
+            Apples.Add(apple);
+        }
+
+        public void RemoveApple(Apple apple)
+        {
+            Apples.Remove(apple);
+        }
+
+        public void UpdateApples(List<Apple> apples)
+        {
+            Apples = apples;
+        }
+
+        #endregion Apples
+
+
         public void Reset()
         {
             Tanks = new List<Tank>();
             Walls = new List<Wall>();
             Bullets = new List<Bullet>();
-            Kolobok kolobok = new Kolobok();
+            Apples = new List<Apple>();
+        Kolobok kolobok = new Kolobok();
 
         }
     }
