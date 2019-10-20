@@ -126,7 +126,17 @@ namespace DataBusinessLayer
         #region Walls
         public IEnumerable<Wall> GetWalls()
         {
-            return Game.GetWalls();
+            List<Wall> walls = (List<Wall>)Game.GetWalls();
+            List<Wall> tempWalls = new List<Wall>(walls);
+            foreach (var wall in tempWalls)
+            {
+                if (wall.Strength<=0)
+                {
+                    walls.Remove(wall);
+                }
+            }
+            return walls;
+
         }
         public List<Wall> GenerateWalls()
         {

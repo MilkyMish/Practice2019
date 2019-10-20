@@ -441,7 +441,7 @@ namespace Tanks
                 {
                     if (boxCollides(wall.posX, wall.posY, wall.SpriteSize, bullet))
                     {
-
+                        wall.Strength--;
                         bulletsTemp.Remove(bullet);
                         break;
                     }
