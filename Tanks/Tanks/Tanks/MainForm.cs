@@ -209,12 +209,16 @@ namespace Tanks
             Graphics g = e.Graphics;
 
             List<Wall> walls = (List<Wall>)data.GetWalls();
-            Bitmap sprite = new Bitmap(walls[0].Sprite);
-
-            foreach (Wall wall in walls)
+            Bitmap sprite;
+            if (walls.Count!=0)
             {
-                g.DrawImage(sprite, wall.posX, wall.posY);
+                sprite = new Bitmap(walls[0].Sprite);
+                foreach (Wall wall in walls)
+                {
+                    g.DrawImage(sprite, wall.posX, wall.posY);
+                }
             }
+            
 
             Kolobok kolobok = data.GetKolobok();
             sprite = new Bitmap(kolobok.Sprite);
