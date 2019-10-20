@@ -47,6 +47,7 @@
     <Compile Include="Configuration.cs" />
     <Compile Include="DirectionMove.cs" />
     <Compile Include="Entity.cs" />
+    <Compile Include="Explosion.cs" />
     <Compile Include="Kolobok.cs" />
     <Compile Include="LogView.cs" />
     <Compile Include="PackmanController.cs" />

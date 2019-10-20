@@ -25,6 +25,7 @@ namespace Tanks
         int gameTime;
         int AppleCounter;
         Label lbl_AppleCounter;
+        List<Explosion> Explosions;
         public MainForm()
         {
             InitializeComponent();
@@ -67,6 +68,7 @@ namespace Tanks
             Map.Size = new Size(MapWidth, MapHeight);
             Map.BackColor = Color.Black;
             Reset();
+            Explosions = new List<Explosion>();
             lastTime = DateTime.Now;
 
             logForm = new LogForm(data)
@@ -263,10 +265,24 @@ namespace Tanks
                 g.DrawImage(sprite, apple.posX, apple.posY);
             }
 
-           
+            List<Explosion> explosions = new List<Explosion>(Explosions);
+            foreach (Explosion explosion in explosions)
+            {
+
+                    Bitmap spriteTemp = new Bitmap(explosion.Sprites[explosion.curentpic++]);
+                    sprite = new Bitmap(spriteTemp, new Size(explosion.SpriteSize[0], explosion.SpriteSize[1]));
+                    g.DrawImage(sprite, explosion.posX, explosion.posY);
+                if (explosion.curentpic>=3)
+                {
+                    Explosions.Remove(explosion);
+                }
+               
+            }
+
+
         }
 
-#endregion Drawing
+        #endregion Drawing
 
         #region Collisions
         bool collides(int x, int y, int r, int b, int x2, int y2, int r2, int b2)
@@ -447,6 +463,7 @@ namespace Tanks
                     {
                         wall.Strength--;
                         bulletsTemp.Remove(bullet);
+                        Explosions.Add(new Explosion() { posX = bullet.posX, posY = bullet.posY });
                         break;
                     }
                 }
