@@ -206,7 +206,7 @@ namespace DataLayer
                             break;
                         case 'K':
                             Kolobok kolobok = new Kolobok();
-                            if (colcount == 1 || colcount%7==0)
+                            if (colcount == 1 )
                             {
                                 kolobok.posX = colcount++;
                                 kolobok.posY = rowcount;
@@ -221,9 +221,10 @@ namespace DataLayer
                         case 'W':
                             Wall wall = new Wall();
                             Kolobok _kolobok = new Kolobok();
-                            if (colcount == 1 || colcount % 7 == 0)
+                            if (colcount == 1)
                             {
-                                wall.posX = colcount++;
+                                wall.posX = 0;
+                                colcount++;
                                 wall.posY = rowcount * _kolobok.SpriteSize[1];
                             }
                             else
@@ -235,9 +236,9 @@ namespace DataLayer
                             break;
                         case 'T':
                             Tank tank = new Tank();
-                            if (colcount == 1 || colcount % 7 == 0)
+                            if (colcount == 1 )
                             {
-                                tank.posX = colcount++;
+                                tank.posX = 0;
                                 tank.posY = rowcount * tank.SpriteSize[1];
                             }
                             else
