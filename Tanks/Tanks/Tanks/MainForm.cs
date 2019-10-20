@@ -47,8 +47,8 @@ namespace Tanks
 
             Map.BackColor = Color.Black;
             
-            data.AddTanks(startConf.TanksCount);
-            data.GenerateWalls();
+            //data.AddTanks(startConf.TanksCount);
+            //data.GenerateWalls();           
             for (int i = 0; i < startConf.AppleCount; i++)
             {
                 data.AddApple();

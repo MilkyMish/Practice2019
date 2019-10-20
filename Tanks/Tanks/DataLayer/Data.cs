@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 using System.Threading.Tasks;
+using System.Threading;
 using Entities;
+
 
 namespace DataLayer
 {
@@ -176,8 +179,82 @@ namespace DataLayer
             Walls = new List<Wall>();
             Bullets = new List<Bullet>();
             Apples = new List<Apple>();
-        Kolobok kolobok = new Kolobok();
+            // Kolobok kolobok = new Kolobok();
+            SpawnFromTxt();
+        }
+        public void SpawnFromTxt()
+        {
+            //FileStream File = new FileStream(@"..\..\..\img\spawn.txt",FileMode.Open);
+            using (FileStream fstream = File.OpenRead(@"..\..\..\img\spawn.txt"))
+            {
+                // преобразуем строку в байты
+                byte[] array = new byte[fstream.Length];
+                // считываем данные
+                fstream.Read(array, 0, array.Length);
+                // декодируем байты в строку
+                string textFromFile = System.Text.Encoding.Default.GetString(array);
 
+                int rowcount = 1;
+                int colcount = 1;
+                for (int i = 0; i < textFromFile.Length; i++)
+                {
+                    switch (textFromFile[i])
+                    {
+                        case '\n':
+                            rowcount++;
+                            colcount = 1;
+                            break;
+                        case 'K':
+                            Kolobok kolobok = new Kolobok();
+                            if (colcount == 1 || colcount%7==0)
+                            {
+                                kolobok.posX = colcount++;
+                                kolobok.posY = rowcount;
+                            }
+                            else
+                            {
+                                kolobok.posX = colcount++ *kolobok.SpriteSize[0];
+                                kolobok.posY = rowcount * kolobok.SpriteSize[1];
+                            }
+                            this.kolobok = kolobok;
+                            break;
+                        case 'W':
+                            Wall wall = new Wall();
+                            Kolobok _kolobok = new Kolobok();
+                            if (colcount == 1 || colcount % 7 == 0)
+                            {
+                                wall.posX = colcount++;
+                                wall.posY = rowcount * _kolobok.SpriteSize[1];
+                            }
+                            else
+                            {
+                                wall.posX = colcount++ * _kolobok.SpriteSize[0];
+                                wall.posY = rowcount * _kolobok.SpriteSize[1];
+                            }
+                            Walls.Add(wall);
+                            break;
+                        case 'T':
+                            Tank tank = new Tank();
+                            if (colcount == 1 || colcount % 7 == 0)
+                            {
+                                tank.posX = colcount++;
+                                tank.posY = rowcount * tank.SpriteSize[1];
+                            }
+                            else
+                            {
+                                tank.posX = colcount++ * tank.SpriteSize[0];
+                                tank.posY = rowcount * tank.SpriteSize[1];
+                            }
+                            Thread.Sleep(40);
+                            Tanks.Add(tank);
+                            break;
+                        default:
+                            colcount++;
+                            break;
+                    }
+
+                }
+            }
         }
     }
 

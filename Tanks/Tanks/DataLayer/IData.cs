@@ -33,6 +33,7 @@ namespace DataLayer
         void RemoveApple(Apple apple);
         void UpdateApples(List<Apple> apples);
 
+        void SpawnFromTxt();
 
         void Reset();
     }
