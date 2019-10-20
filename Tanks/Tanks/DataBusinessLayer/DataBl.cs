@@ -132,6 +132,11 @@ namespace DataBusinessLayer
         {
             return Game.GenerateWalls();
         }
+        public IEnumerable<River> GetRivers()
+        {
+            return Game.GetRivers();
+        }
+
         #endregion Walls
 
         #region Bullets

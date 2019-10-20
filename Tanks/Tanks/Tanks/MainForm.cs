@@ -92,6 +92,14 @@ namespace Tanks
             lbl_AppleCounter.Text = AppleCounter.ToString();
             this.Controls.Add(lbl_AppleCounter);
 
+          /*  Button btn_NewGame = new Button();
+            btn_NewGame.Text = "new game";
+            btn_NewGame.Click += btn_newGame_Click;
+            btn_NewGame.Location = new Point(10, 100);
+            this.Controls.Add(btn_NewGame);*/
+
+            //this.KeyPress += MainForm_KeyPress;
+            
             Refresh();
 
             timer.Interval = 1000 / 60;
@@ -224,6 +232,15 @@ namespace Tanks
                 g.DrawImage(sprite, tank.posX, tank.posY);
             }
 
+            List<River> rivers = (List<River>)data.GetRivers();
+            foreach (River river in rivers)
+            {
+                Bitmap spriteTemp = new Bitmap(river.Sprite);
+                sprite = new Bitmap(spriteTemp, new Size(river.SpriteSize[0], river.SpriteSize[1]));
+
+                g.DrawImage(sprite, river.posX, river.posY);
+            }
+
             List<Bullet> bullets = (List<Bullet>)data.GetBullets();
             foreach (Bullet bullet in bullets)
             {
@@ -242,6 +259,7 @@ namespace Tanks
                 g.DrawImage(sprite, apple.posX, apple.posY);
             }
 
+           
         }
 
 #endregion Drawing
@@ -287,7 +305,7 @@ namespace Tanks
         {
             List<Wall> walls = (List<Wall>)data.GetWalls();
             List<Tank> tanks = (List < Tank > )data.GetTanks();
-            
+            List<River> rivers = (List<River>)data.GetRivers();
 
             if (entity.posX < 0)
             {
@@ -316,6 +334,32 @@ namespace Tanks
                     {
                         entity.posX += 10;
                     }else
+                    if (entity.Direction == RotateFlipType.Rotate90FlipNone)
+                    {
+                        entity.posX -= 10;
+                    }
+                }
+            }
+            foreach (River river in rivers)
+            {
+                if (boxCollides(river.posX,river.posY,river.SpriteSize, entity.posX, entity.posY, entity.SpriteSize))
+                {
+
+                    if (entity.Direction == RotateFlipType.Rotate180FlipNone)
+                    {
+                        entity.posY -= 10;
+                    }
+                    else
+                    if (entity.Direction == RotateFlipType.RotateNoneFlipNone)
+                    {
+                        entity.posY += 10;
+                    }
+                    else
+                    if (entity.Direction == RotateFlipType.Rotate270FlipNone)
+                    {
+                        entity.posX += 10;
+                    }
+                    else
                     if (entity.Direction == RotateFlipType.Rotate90FlipNone)
                     {
                         entity.posX -= 10;
@@ -433,6 +477,7 @@ namespace Tanks
         {
             Kolobok kolobok = data.GetKolobok();
             List<Wall> walls = (List<Wall>)data.GetWalls();
+            List<River> rivers = (List<River>)data.GetRivers();
             List<Apple> applesTemp = new List<Apple>(apples);
             foreach (Apple apple in applesTemp)
             {
@@ -452,6 +497,14 @@ namespace Tanks
 
                         }
                     }
+                    foreach (River river in rivers)
+                    {
+                        if (boxCollides(river.posX, river.posY, river.SpriteSize, apple.posX, apple.posY, apple.SpriteSize))
+                        {
+                            apple.posY -= 45;
+
+                        }
+                    }
                 }
             }
            
@@ -463,10 +516,11 @@ namespace Tanks
         #endregion Collisions
         private void btn_newGame_Click(object sender, EventArgs e)
         {
-        
+
             //Map.Focus();
             //Focus();
-           
+            timer.Start();
+
         }
 
      

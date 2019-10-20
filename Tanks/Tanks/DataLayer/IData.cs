@@ -22,6 +22,7 @@ namespace DataLayer
 
         List<Wall> GenerateWalls();
         IEnumerable<Wall> GetWalls();
+        IEnumerable<River> GetRivers();
 
         IEnumerable<Bullet> GetBullets();
         void AddBullet(Bullet bullet);

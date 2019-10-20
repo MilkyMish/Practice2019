@@ -33,6 +33,7 @@ namespace DataLayer
         private List<Apple> Apples = new List<Apple>();
         private List<Wall> Walls = new List<Wall>();
         private List<Bullet> Bullets = new List<Bullet>();
+        private List<River> Rivers = new List<River>();
 
         #region Kolobok
         private Kolobok kolobok = new Kolobok();
@@ -104,13 +105,13 @@ namespace DataLayer
                 if (i!=2 && i!=4 && i!=5)
                 {
                     Wall MapWall = new Wall(i * wall.SpriteSize[0], 300);
-                    MapWall.id = id++;
+                    //MapWall.id = id++;
                     Walls.Add(MapWall);
                 }
                 else
                 {
                     Wall MapWall = new Wall(i * wall.SpriteSize[0], 100);
-                    MapWall.id = id++;
+                   // MapWall.id = id++;
                     Walls.Add(MapWall);
                 }
                       
@@ -121,6 +122,11 @@ namespace DataLayer
         public IEnumerable<Wall> GetWalls()
         {
             return Walls;
+        }
+
+        public IEnumerable<River> GetRivers()
+        {
+            return Rivers;
         }
 
         #endregion Walls
@@ -179,6 +185,7 @@ namespace DataLayer
             Walls = new List<Wall>();
             Bullets = new List<Bullet>();
             Apples = new List<Apple>();
+            Rivers = new List<River>();
             // Kolobok kolobok = new Kolobok();
             SpawnFromTxt();
         }
@@ -239,6 +246,7 @@ namespace DataLayer
                             if (colcount == 1 )
                             {
                                 tank.posX = 0;
+ 
                                 tank.posY = rowcount * tank.SpriteSize[1];
                             }
                             else
@@ -248,6 +256,23 @@ namespace DataLayer
                             }
                             Thread.Sleep(40);
                             Tanks.Add(tank);
+                            break;
+                        case 'R':
+                            River river = new River();
+                            Kolobok __kolobok = new Kolobok();
+                            if (colcount == 1)
+                            {
+                                river.posX = 0;
+                                colcount++;
+                                river.posY = rowcount * __kolobok.SpriteSize[1];
+                            }
+                            else
+                            {
+                                river.posX = (colcount++-1)* __kolobok.SpriteSize[0];
+                                river.posY = rowcount * __kolobok.SpriteSize[1];
+                            }
+                           
+                            Rivers.Add(river);
                             break;
                         default:
                             colcount++;
