@@ -26,6 +26,7 @@ namespace Tanks
         int AppleCounter;
         Label lbl_AppleCounter;
         List<Explosion> Explosions;
+        int KolobokAnimation = 1;
         public MainForm()
         {
             InitializeComponent();
@@ -167,6 +168,9 @@ namespace Tanks
                     kolobok.posY -= 1;
                 }
                 kolobok.Direction = RotateFlipType.RotateNoneFlipNone;
+                kolobok = KolobokAnimationCheck(kolobok);
+
+
             }
             if (e.KeyChar == 's')
             {
@@ -175,6 +179,7 @@ namespace Tanks
                     kolobok.posY += 1;
                 }
                 kolobok.Direction = RotateFlipType.Rotate180FlipNone;
+                kolobok = KolobokAnimationCheck(kolobok);
             }
             if (e.KeyChar == 'a')
             {
@@ -184,6 +189,7 @@ namespace Tanks
                 }
                 
                 kolobok.Direction = RotateFlipType.Rotate270FlipNone;
+                kolobok = KolobokAnimationCheck(kolobok);
             }
             if (e.KeyChar == 'd')
             {
@@ -192,6 +198,7 @@ namespace Tanks
                     kolobok.posX += 1;
                 }
                 kolobok.Direction = RotateFlipType.Rotate90FlipNone;
+                kolobok = KolobokAnimationCheck(kolobok);
             }
             if (e.KeyChar == ' ')
             {
@@ -202,7 +209,28 @@ namespace Tanks
 
         }
 
-
+        private Kolobok KolobokAnimationCheck(Kolobok kolobok)
+        {
+            if (KolobokAnimation==2)
+            {
+                KolobokAnimation = 0;
+                if (kolobok.CurrentPic!=6)
+                {
+                    kolobok.CurrentPic++;
+                    return kolobok;
+                }
+                else
+                {
+                    kolobok.CurrentPic = 0;
+                    return kolobok;
+                }
+            }
+            else
+            {
+                KolobokAnimation++;
+                return kolobok;
+            }
+        }
 
         #region Drawing
 
@@ -223,7 +251,7 @@ namespace Tanks
             
 
             Kolobok kolobok = data.GetKolobok();
-            sprite = new Bitmap(kolobok.Sprite);
+            sprite = new Bitmap(kolobok.Sprite[kolobok.CurrentPic]);
 
 
             sprite.RotateFlip(kolobok.Direction);
