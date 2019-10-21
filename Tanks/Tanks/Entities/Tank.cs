@@ -63,7 +63,7 @@ namespace Entities
             }
             else
             {
-                if (moveCount>10)
+                if (moveCount>16)
                 {
                     moveCount = 0;
                     fire = true;
