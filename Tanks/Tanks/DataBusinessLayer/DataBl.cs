@@ -218,6 +218,15 @@ namespace DataBusinessLayer
                 LogView tankView = new LogView(tank);
                 logList.Add(tankView);
             }
+
+            List<Apple> apples = (List<Apple>)Game.GetApples();
+            foreach (Apple apple in apples)
+            {
+                LogView appleView = new LogView(apple);
+                logList.Add(appleView);
+            }
+
+
             return logList;
         }
 

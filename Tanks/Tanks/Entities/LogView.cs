@@ -19,6 +19,12 @@ namespace Entities
             X = tank.posX;
             Y = tank.posY;
         }
+        public LogView(Apple apple)
+        {
+            Name = "Apple ";
+            X = apple.posX;
+            Y = apple.posY;
+        }
         public LogView(Kolobok kolobok)
         {
             Name = "Kolobok ";

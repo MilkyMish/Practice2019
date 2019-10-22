@@ -27,6 +27,10 @@ namespace Tanks
         Label lbl_AppleCounter;
         List<Explosion> Explosions;
         int KolobokAnimation = 1;
+        Button btn_NewGame;
+        bool GameOver = false;
+        bool Victory = false;
+
         public MainForm()
         {
             InitializeComponent();
@@ -43,6 +47,7 @@ namespace Tanks
         }
         private void Reset()
         {
+           
             Configuration startConf = data.Start();
 
             data.Reset();
@@ -56,7 +61,7 @@ namespace Tanks
                 data.AddApple();
             }
 
-            Map.Paint += new PaintEventHandler(this.Map_Paint);
+           
            
             this.Controls.Add(Map);
         }
@@ -95,22 +100,26 @@ namespace Tanks
             lbl_AppleCounter.Text = AppleCounter.ToString();
             this.Controls.Add(lbl_AppleCounter);
 
-          /*  Button btn_NewGame = new Button();
+            btn_NewGame = new Button();
             btn_NewGame.Text = "new game";
             btn_NewGame.Click += btn_newGame_Click;
             btn_NewGame.Location = new Point(10, 100);
-            this.Controls.Add(btn_NewGame);*/
+            this.Controls.Add(btn_NewGame);
+
+            Focus();
+            this.KeyPreview = true;
 
             //this.KeyPress += MainForm_KeyPress;
-            
+            Map.Paint += new PaintEventHandler(this.Map_Paint);
             Refresh();
 
             timer.Interval = 1000 / 60;
-            timer.Start();
+            //timer.Start();
         }
 
         private void Update(TimeSpan dt)
         {
+            this.Focus();
             gameTime = gameTime + dt.Milliseconds;
 
             List < Tank > tanks = (List<Tank>)data.GetTanks();
@@ -129,7 +138,7 @@ namespace Tanks
             data.UpdateTanks(tanks);
 
             Kolobok kolobok = data.GetKolobok();
-
+            kolobok.Move();
             List<Bullet> bullets = (List<Bullet>)data.GetBullets();
             for (int i = 0; i < bullets.Count; i++)
             {
@@ -163,10 +172,10 @@ namespace Tanks
             Kolobok kolobok = data.GetKolobok();
             if (e.KeyChar=='w')
             {
-                for (int i = 0; i < kolobok.Speed; i++)
-                {
-                    kolobok.posY -= 1;
-                }
+                //for (int i = 0; i < kolobok.Speed; i++)
+                //{
+                //    kolobok.posY -= 1;
+                //}
                 kolobok.Direction = RotateFlipType.RotateNoneFlipNone;
                 kolobok = KolobokAnimationCheck(kolobok);
 
@@ -174,29 +183,29 @@ namespace Tanks
             }
             if (e.KeyChar == 's')
             {
-                for (int i = 0; i < kolobok.Speed; i++)
-                {
-                    kolobok.posY += 1;
-                }
+                //for (int i = 0; i < kolobok.Speed; i++)
+                //{
+                //    kolobok.posY += 1;
+                //}
                 kolobok.Direction = RotateFlipType.Rotate180FlipNone;
                 kolobok = KolobokAnimationCheck(kolobok);
             }
             if (e.KeyChar == 'a')
             {
-                for (int i = 0; i < kolobok.Speed; i++)
-                {
-                    kolobok.posX -= 1;
-                }
+                //for (int i = 0; i < kolobok.Speed; i++)
+                //{
+                //    kolobok.posX -= 1;
+                //}
                 
                 kolobok.Direction = RotateFlipType.Rotate270FlipNone;
                 kolobok = KolobokAnimationCheck(kolobok);
             }
             if (e.KeyChar == 'd')
             {
-                for (int i = 0; i < kolobok.Speed; i++)
-                {
-                    kolobok.posX += 1;
-                }
+                //for (int i = 0; i < kolobok.Speed; i++)
+                //{
+                //    kolobok.posX += 1;
+                //}
                 kolobok.Direction = RotateFlipType.Rotate90FlipNone;
                 kolobok = KolobokAnimationCheck(kolobok);
             }
@@ -236,6 +245,7 @@ namespace Tanks
 
         private void Map_Paint(object sender, System.Windows.Forms.PaintEventArgs e)
         {
+            this.Focus();
             Graphics g = e.Graphics;
 
             List<Wall> walls = (List<Wall>)data.GetWalls();
@@ -258,13 +268,20 @@ namespace Tanks
             g.DrawImage(sprite, kolobok.posX, kolobok.posY);
 
             List<Tank> tanks = (List<Tank>)data.GetTanks();
-
-            foreach (Tank tank in tanks)
+            if (tanks.Count!=0)
             {
-                sprite = new Bitmap(tank.Sprite);
-                sprite.RotateFlip(tank.Direction);
-                g.DrawImage(sprite, tank.posX, tank.posY);
+                foreach (Tank tank in tanks)
+                {
+                    sprite = new Bitmap(tank.Sprite);
+                    sprite.RotateFlip(tank.Direction);
+                    g.DrawImage(sprite, tank.posX, tank.posY);
+                }
             }
+            else
+            {
+                Victory = true;
+            }
+           
 
             List<River> rivers = (List<River>)data.GetRivers();
             foreach (River river in rivers)
@@ -305,6 +322,22 @@ namespace Tanks
                     Explosions.Remove(explosion);
                 }
                
+            }
+            if (Victory)
+            {
+                Configuration configuration = data.Start();
+                Bitmap spriteTemp = new Bitmap(@"..\..\..\img\Victory.png");
+                sprite = new Bitmap(spriteTemp, new Size(configuration.MapWidth, configuration.MapHeight));
+                g.DrawImage(sprite, 0, 0);
+                timer.Stop();
+            }
+            if (GameOver)
+            {
+                Configuration configuration = data.Start();
+                Bitmap spriteTemp = new Bitmap(@"..\..\..\img\gameover.png");
+                sprite = new Bitmap(spriteTemp, new Size(configuration.MapWidth, configuration.MapHeight));
+                g.DrawImage(sprite, 0, 0);
+                timer.Stop();
             }
 
 
@@ -452,6 +485,90 @@ namespace Tanks
                 entity.posY = MapHeight - entity.SpriteSize[1];
             }
         }
+        private void CheckEntityBounds(Kolobok kolobok)
+        {
+            List<Wall> walls = (List<Wall>)data.GetWalls();
+            List<Tank> tanks = (List<Tank>)data.GetTanks();
+            List<River> rivers = (List<River>)data.GetRivers();
+
+            if (kolobok.posX < 0)
+            {
+                kolobok.posX = 0;
+            }
+            else if (kolobok.posX > MapWidth - kolobok.SpriteSize[0])
+            {
+                kolobok.posX = MapWidth - kolobok.SpriteSize[0];
+            }
+            foreach (Wall wall in walls)
+            {
+                if (boxCollides(wall, kolobok.posX, kolobok.posY, kolobok.SpriteSize))
+                {
+
+                    if (kolobok.Direction == RotateFlipType.Rotate180FlipNone)
+                    {
+                        kolobok.posY -= 10;
+                    }
+                    else
+                    if (kolobok.Direction == RotateFlipType.RotateNoneFlipNone)
+                    {
+                        kolobok.posY += 10;
+                    }
+                    else
+                    if (kolobok.Direction == RotateFlipType.Rotate270FlipNone)
+                    {
+                        kolobok.posX += 10;
+                    }
+                    else
+                    if (kolobok.Direction == RotateFlipType.Rotate90FlipNone)
+                    {
+                        kolobok.posX -= 10;
+                    }
+                }
+            }
+            foreach (River river in rivers)
+            {
+                if (boxCollides(river.posX, river.posY, river.SpriteSize, kolobok.posX, kolobok.posY, kolobok.SpriteSize))
+                {
+
+                    if (kolobok.Direction == RotateFlipType.Rotate180FlipNone)
+                    {
+                        kolobok.posY -= 10;
+                    }
+                    else
+                    if (kolobok.Direction == RotateFlipType.RotateNoneFlipNone)
+                    {
+                        kolobok.posY += 10;
+                    }
+                    else
+                    if (kolobok.Direction == RotateFlipType.Rotate270FlipNone)
+                    {
+                        kolobok.posX += 10;
+                    }
+                    else
+                    if (kolobok.Direction == RotateFlipType.Rotate90FlipNone)
+                    {
+                        kolobok.posX -= 10;
+                    }
+                }
+            }
+            foreach (Tank tank in tanks)
+            {
+                if ((tank.posX != kolobok.posX || tank.posY != kolobok.posY) && boxCollides(tank.posX, tank.posY, tank.SpriteSize, kolobok.posX, kolobok.posY, kolobok.SpriteSize))
+                {
+                    GameOver = true;
+                }
+
+            }
+
+            if (kolobok.posY < 0)
+            {
+                kolobok.posY = 0;
+            }
+            else if (kolobok.posY > MapHeight - kolobok.SpriteSize[1])
+            {
+                kolobok.posY = MapHeight - kolobok.SpriteSize[1];
+            }
+        }
         private List<Bullet> CheckEntityBounds(List<Bullet> bullets)
         {
             List<Wall> walls = (List<Wall>)data.GetWalls();
@@ -514,8 +631,7 @@ namespace Tanks
                     Kolobok kolobok = data.GetKolobok();
                     if ((boxCollides(kolobok.posX, kolobok.posY, kolobok.SpriteSize, bullet)))
                     {
-
-                        timer.Stop();
+                        GameOver = true;                    
                     }
                 }
             }
@@ -563,11 +679,18 @@ namespace Tanks
         }
 
         #endregion Collisions
+       
+
         private void btn_newGame_Click(object sender, EventArgs e)
         {
 
-            //Map.Focus();
-            //Focus();
+            GameOver = false;
+            Victory = false;
+
+            this.Focus();
+            btn_NewGame.TabStop = false;
+            btn_NewGame.TabIndex = 0;
+            Reset();
             timer.Start();
 
         }

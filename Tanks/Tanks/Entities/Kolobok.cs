@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Drawing;
 
 namespace Entities
 {
@@ -13,6 +14,26 @@ namespace Entities
            @"..\..\..\img\Green_tank6.png", @"..\..\..\img\Green_tank7.png" };
        public int Speed = 10;
        public int CurrentPic = 0;
-       //public int[] SpriteSize = new int[2] { 75, 83 };
+       public void Move()
+        {
+            switch (Direction)
+            {
+                case RotateFlipType.RotateNoneFlipNone:
+                    this.posY -= Speed;
+                    break;
+                case RotateFlipType.Rotate90FlipNone:
+                    this.posX += Speed;
+                    break;
+                case RotateFlipType.Rotate180FlipNone:
+                    this.posY += Speed;
+                    break;
+                case RotateFlipType.Rotate270FlipNone:
+                    this.posX -= Speed;
+                    break;
+                default:
+                    break;
+            }
+        }
+        //public int[] SpriteSize = new int[2] { 75, 83 };
     }
 }
