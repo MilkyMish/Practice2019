@@ -686,6 +686,7 @@ namespace Tanks
 
             GameOver = false;
             Victory = false;
+            AppleCounter = 0;
 
             this.Focus();
             btn_NewGame.TabStop = false;
