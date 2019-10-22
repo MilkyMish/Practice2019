@@ -381,6 +381,7 @@ namespace Tanks
                     x2, y2,
                     x2 + spritesize2[0] - 5, y2 + spritesize2[1]);
         }
+       
 
         private void CheckEntityBounds(Entity entity)
         {
@@ -533,21 +534,25 @@ namespace Tanks
                     if (kolobok.Direction == RotateFlipType.Rotate180FlipNone)
                     {
                         kolobok.Direction = RotateFlipType.RotateNoneFlipNone;
+                        kolobok.posY -= 10;
                     }
                     else
                     if (kolobok.Direction == RotateFlipType.RotateNoneFlipNone)
                     {
                         kolobok.Direction = RotateFlipType.Rotate180FlipNone;
+                        kolobok.posY += 10;
                     }
                     else
                     if (kolobok.Direction == RotateFlipType.Rotate270FlipNone)
                     {
                         kolobok.Direction = RotateFlipType.Rotate90FlipNone;
+                        kolobok.posX += 10;
                     }
                     else
                     if (kolobok.Direction == RotateFlipType.Rotate90FlipNone)
                     {
                         kolobok.Direction = RotateFlipType.Rotate270FlipNone;
+                        kolobok.posX -= 10;
                     }
                 }
             }
