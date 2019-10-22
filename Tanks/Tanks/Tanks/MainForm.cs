@@ -493,35 +493,35 @@ namespace Tanks
 
             if (kolobok.posX < 0)
             {
-                kolobok.posX = 0;
+                kolobok.Direction = RotateFlipType.Rotate90FlipNone;
             }
             else if (kolobok.posX > MapWidth - kolobok.SpriteSize[0])
             {
-                kolobok.posX = MapWidth - kolobok.SpriteSize[0];
+                kolobok.Direction = RotateFlipType.Rotate270FlipNone;
             }
-            foreach (Wall wall in walls)
+                foreach (Wall wall in walls)
             {
                 if (boxCollides(wall, kolobok.posX, kolobok.posY, kolobok.SpriteSize))
                 {
 
                     if (kolobok.Direction == RotateFlipType.Rotate180FlipNone)
                     {
-                        kolobok.posY -= 10;
+                        kolobok.Direction = RotateFlipType.RotateNoneFlipNone;
                     }
                     else
                     if (kolobok.Direction == RotateFlipType.RotateNoneFlipNone)
                     {
-                        kolobok.posY += 10;
+                        kolobok.Direction = RotateFlipType.Rotate180FlipNone;
                     }
                     else
                     if (kolobok.Direction == RotateFlipType.Rotate270FlipNone)
                     {
-                        kolobok.posX += 10;
+                        kolobok.Direction = RotateFlipType.Rotate90FlipNone;
                     }
                     else
                     if (kolobok.Direction == RotateFlipType.Rotate90FlipNone)
                     {
-                        kolobok.posX -= 10;
+                        kolobok.Direction = RotateFlipType.Rotate270FlipNone;
                     }
                 }
             }
@@ -532,22 +532,22 @@ namespace Tanks
 
                     if (kolobok.Direction == RotateFlipType.Rotate180FlipNone)
                     {
-                        kolobok.posY -= 10;
+                        kolobok.Direction = RotateFlipType.RotateNoneFlipNone;
                     }
                     else
                     if (kolobok.Direction == RotateFlipType.RotateNoneFlipNone)
                     {
-                        kolobok.posY += 10;
+                        kolobok.Direction = RotateFlipType.Rotate180FlipNone;
                     }
                     else
                     if (kolobok.Direction == RotateFlipType.Rotate270FlipNone)
                     {
-                        kolobok.posX += 10;
+                        kolobok.Direction = RotateFlipType.Rotate90FlipNone;
                     }
                     else
                     if (kolobok.Direction == RotateFlipType.Rotate90FlipNone)
                     {
-                        kolobok.posX -= 10;
+                        kolobok.Direction = RotateFlipType.Rotate270FlipNone;
                     }
                 }
             }
@@ -562,11 +562,11 @@ namespace Tanks
 
             if (kolobok.posY < 0)
             {
-                kolobok.posY = 0;
+                kolobok.Direction = RotateFlipType.Rotate180FlipNone;
             }
             else if (kolobok.posY > MapHeight - kolobok.SpriteSize[1])
             {
-                kolobok.posY = MapHeight - kolobok.SpriteSize[1];
+                kolobok.Direction = RotateFlipType.RotateNoneFlipNone;
             }
         }
         private List<Bullet> CheckEntityBounds(List<Bullet> bullets)
