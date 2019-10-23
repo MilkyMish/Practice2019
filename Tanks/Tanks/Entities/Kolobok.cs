@@ -14,6 +14,7 @@ namespace Entities
            @"..\..\..\img\Green_tank6.png", @"..\..\..\img\Green_tank7.png" };
        public int Speed = 10;
        public int CurrentPic = 0;
+       private int KolobokAnimation = 0;
        public void Move()
         {
             switch (Direction)
@@ -33,7 +34,32 @@ namespace Entities
                 default:
                     break;
             }
+            KolobokAnimationCheck();
+
+
         }
         //public int[] SpriteSize = new int[2] { 75, 83 };
+        private void KolobokAnimationCheck()
+        {
+            if (KolobokAnimation == 2)
+            {
+                KolobokAnimation = 0;
+                if (CurrentPic != 6)
+                {
+                    CurrentPic++;
+                 
+                }
+                else
+                {
+                    CurrentPic = 0;
+                   
+                }
+            }
+            else
+            {
+                KolobokAnimation++;
+               
+            }
+        }
     }
 }

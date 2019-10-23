@@ -26,7 +26,7 @@ namespace Tanks
         int AppleCounter;
         Label lbl_AppleCounter;
         List<Explosion> Explosions;
-        int KolobokAnimation = 1;
+        //int KolobokAnimation = 1;
         Button btn_NewGame;
         bool GameOver = false;
         bool Victory = false;
@@ -177,7 +177,7 @@ namespace Tanks
                 //    kolobok.posY -= 1;
                 //}
                 kolobok.Direction = RotateFlipType.RotateNoneFlipNone;
-                kolobok = KolobokAnimationCheck(kolobok);
+               // kolobok = KolobokAnimationCheck(kolobok);
 
 
             }
@@ -188,7 +188,7 @@ namespace Tanks
                 //    kolobok.posY += 1;
                 //}
                 kolobok.Direction = RotateFlipType.Rotate180FlipNone;
-                kolobok = KolobokAnimationCheck(kolobok);
+               // kolobok = KolobokAnimationCheck(kolobok);
             }
             if (e.KeyChar == 'a')
             {
@@ -198,7 +198,7 @@ namespace Tanks
                 //}
                 
                 kolobok.Direction = RotateFlipType.Rotate270FlipNone;
-                kolobok = KolobokAnimationCheck(kolobok);
+               // kolobok = KolobokAnimationCheck(kolobok);
             }
             if (e.KeyChar == 'd')
             {
@@ -207,7 +207,7 @@ namespace Tanks
                 //    kolobok.posX += 1;
                 //}
                 kolobok.Direction = RotateFlipType.Rotate90FlipNone;
-                kolobok = KolobokAnimationCheck(kolobok);
+              //  kolobok = KolobokAnimationCheck(kolobok);
             }
             if (e.KeyChar == ' ')
             {
@@ -218,28 +218,28 @@ namespace Tanks
 
         }
 
-        private Kolobok KolobokAnimationCheck(Kolobok kolobok)
-        {
-            if (KolobokAnimation==2)
-            {
-                KolobokAnimation = 0;
-                if (kolobok.CurrentPic!=6)
-                {
-                    kolobok.CurrentPic++;
-                    return kolobok;
-                }
-                else
-                {
-                    kolobok.CurrentPic = 0;
-                    return kolobok;
-                }
-            }
-            else
-            {
-                KolobokAnimation++;
-                return kolobok;
-            }
-        }
+        //private Kolobok KolobokAnimationCheck(Kolobok kolobok)
+        //{
+        //    if (KolobokAnimation==2)
+        //    {
+        //        KolobokAnimation = 0;
+        //        if (kolobok.CurrentPic!=6)
+        //        {
+        //            kolobok.CurrentPic++;
+        //            return kolobok;
+        //        }
+        //        else
+        //        {
+        //            kolobok.CurrentPic = 0;
+        //            return kolobok;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        KolobokAnimation++;
+        //        return kolobok;
+        //    }
+        //}
 
         #region Drawing
 
